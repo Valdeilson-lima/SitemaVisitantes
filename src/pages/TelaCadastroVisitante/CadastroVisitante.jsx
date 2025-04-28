@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import { db, addDoc, collection } from '../../../firebaseConfig';
+import { db, addDoc, collection, serverTimestamp } from '../../../firebaseConfig';
 
 import './CadastroVisitante.css';
 import { toast } from 'react-toastify';
 
 const schema = yup.object().shape({
     nome_completo: yup.string().required('Nome é obrigatório'),
-    // cpf: yup.string().required('CPF é obrigatório'),
-    // email: yup.string().email('Email inválido').required('Email é obrigatório'),
     telefone: yup.string(),
     cidade_estado: yup.string(),
     denominacao: yup.string(),
@@ -85,11 +83,13 @@ function CadastroVisitante() {
 
     const cadastrarVisitante = async (dados) => {
         try {
-            // Aqui você cria a coleção 'visitantes' no Firestore
             const visitantesRef = collection(db, 'visitantes');
 
-            // Adiciona os dados na coleção
-            await addDoc(visitantesRef, dados);
+            // 🛠️ Adiciona o campo data_cadastro com serverTimestamp()
+            await addDoc(visitantesRef, {
+                ...dados,
+                data_cadastro: serverTimestamp(), // <- Aqui está o segredo!
+            });
         } catch (error) {
             console.error("Erro ao cadastrar visitante: ", error);
             throw new Error("Erro ao cadastrar visitante");
@@ -126,18 +126,6 @@ function CadastroVisitante() {
                                 required
                             />
                         </div>
-                        {/* <div className="form-control">
-                            <label htmlFor="cpf">CPF</label>
-                            <input
-                                type="text"
-                                id="cpf"
-                                name="cpf"
-                                placeholder='Ex: 000.000.000-00'
-                                value={formData.cpf}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div> */}
                         <div className="form-control">
                             <label htmlFor="email">Email</label>
                             <input
@@ -175,6 +163,18 @@ function CadastroVisitante() {
                             />
                         </div>
 
+                        <div className="form-check">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="evangelico"
+                                    checked={formData.evangelico}
+                                    onChange={handleChange}
+                                />
+                                Evangélico?
+                            </label>
+                        </div>
+
                         <button type="button" onClick={handleNext}>Avançar</button>
                         <Link to="/home"><button type="button" className="voltar">Voltar</button></Link>
                     </>
@@ -204,18 +204,8 @@ function CadastroVisitante() {
                                 rows="5"
                             />
                         </div>
-                        <div className="form-control">
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="evangelico"
-                                    checked={formData.evangelico}
-                                    onChange={handleChange}
-                                />
-                                Evangélico?
-                            </label>
-                        </div>
-                        <div className="form-control">
+                       
+                        {/* <div className="form-control">
                             <label>
                                 <input
                                     type="checkbox"
@@ -225,7 +215,7 @@ function CadastroVisitante() {
                                 />
                                 Autoriza uso de imagem nas transmissões?
                             </label>
-                        </div>
+                        </div> */}
 
                         <div className="buttons">
                             <button type="button" onClick={handleSubmit}>Enviar</button>

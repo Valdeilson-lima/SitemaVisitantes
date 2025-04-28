@@ -6,7 +6,7 @@ import { db } from '../../../firebaseConfig'; // Certifique-se de que a configur
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore'; // Importando as funções necessárias do Firestore
 
 function ApresentarVisitantes() {
-    const [visitantesDoDia, setVisitantesDoDia] = useState([]); // Estado para armazenar os visitantes
+    const [visitantes, setVisitantes] = useState([]); // Estado para armazenar os visitantes
     const [erro, setErro] = useState(null); // Estado para gerenciar erros
 
     // Carregar dados quando o componente for montado
@@ -23,7 +23,7 @@ function ApresentarVisitantes() {
                 }));
 
                 // Atualiza o estado com os visitantes
-                setVisitantesDoDia(visitantesList);
+                setVisitantes(visitantesList);
             } catch (error) {
                 console.error('Erro ao carregar os visitantes:', error);
                 setErro('Não foi possível carregar os visitantes'); // Mensagem de erro
@@ -32,6 +32,15 @@ function ApresentarVisitantes() {
 
         fetchVisitantes(); // Chama a função para buscar os dados
     }, []); // O efeito será chamado uma única vez quando o componente for montado
+
+
+    const dataHoje = new Date().toLocaleDateString('pt-BR');
+
+    const visitantesDoDia = visitantes.filter(v => {
+        if (!v.data_cadastro) return false; // Protege contra visitante sem data
+        const dataVisita = new Date(v.data_cadastro.seconds * 1000).toLocaleDateString('pt-BR');
+        return dataVisita === dataHoje;
+    });
 
     // Função para atualizar o campo 'apresentado' para 'true' no Firestore
     const handleApresentar = async (idVisitante) => {
@@ -42,7 +51,7 @@ function ApresentarVisitantes() {
             });
 
             // Atualiza o estado local sem precisar recarregar a página
-            setVisitantesDoDia((prevVisitantes) => 
+            setVisitantes((prevVisitantes) =>
                 prevVisitantes.map((visitante) =>
                     visitante.id === idVisitante
                         ? { ...visitante, apresentado: true } // Atualiza o visitante específico
@@ -59,32 +68,36 @@ function ApresentarVisitantes() {
     return (
         <div className='apresentar-visitantes'>
             <h1>Apresentar Visitantes</h1>
-            {erro && <p className="erro">{erro}</p>} {/* Exibe a mensagem de erro, se houver */}
+            {erro && <p className="erro">{erro}</p>}
             <ul className="lista-visitantes">
                 {visitantesDoDia.map((visitante) => (
                     <li key={visitante.id} className="visitante-card">
                         <h2>{visitante.nome_completo}</h2>
                         <p className="cidade">{visitante.cidade_estado}</p>
                         <p className="denominacao">{visitante.denominacao || 'Sem Denominação'}</p>
-                        <p className="data">{new Date(visitante.data_cadastro).toLocaleDateString('pt-BR')}</p>
+                        <p className="data">
+                            {visitante.data_cadastro
+                                ? new Date(visitante.data_cadastro.seconds * 1000).toLocaleDateString('pt-BR')
+                                : 'Data inválida'}
+                        </p>
 
                         <div className="status-linhas">
                             <span className={visitante.evangelico ? "verde" : "vermelho"}>
                                 {visitante.evangelico ? 'Evangélico' : 'Não Evangélico'}
                             </span>
 
-                            <span className={visitante.autoriza_imagem ? "verde" : "vermelho"}>
-                                {visitante.autoriza_imagem ? 'Termo Autorizado' : 'Termo Não Autorizado'}
-                            </span>
+
+                            <button
+                                className={`botao-apresentado ${visitante.apresentado ? 'verde' : ''}`}
+                                onClick={() => handleApresentar(visitante.id)}
+                                disabled={visitante.apresentado} // Desabilita o botão se o visitante já foi apresentado
+                            >
+                                {visitante.apresentado ? <><FaCheck /> Apresentado</> : ' Apresentar'}
+                            </button>
+
                         </div>
 
-                        <button
-                            className={`botao-apresentado ${visitante.apresentado ? 'verde' : ''}`}
-                            onClick={() => handleApresentar(visitante.id)}
-                            disabled={visitante.apresentado} // Desabilita o botão se o visitante já foi apresentado
-                        >
-                            {visitante.apresentado ? <><FaCheck /> Apresentado</> : ' Apresentar'}
-                        </button>
+
                     </li>
                 ))}
             </ul>

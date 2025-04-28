@@ -52,39 +52,30 @@
 
 
 
-
-.visitante-card .botao-apresentado {
-    font-size: 14px; 
-    padding: 5px 10px; 
-    width: 40%;
-    margin: 0 auto;
-    border-radius: 8px;
-    background-color: var(--marrom-escuro-10);
-    color: var(--neutro-claro-100);
-    border: none; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    margin-top: 20px; 
-    align-items: center;
-    display: block;
-    align-self: center;
-    
-}
-
-
-
-
 .status-linhas {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; 
+    
 }
 
 .status-linhas span {
+    margin: auto 0;
     font-size: 14px;
     font-weight: 500;
-    margin-top: 10px;
     color: var(--marron-escuro-10);
+   
+   
+}
+
+.status-linhas button {
+    background-color: var(--marrom-escuro-10);
+    color: var(--neutro-claro-100);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+   
 }
 
 
@@ -102,7 +93,7 @@
     background-color: transparent !important;
 }
 
-.apresentar-visitantes button {
+.btn-voltar {
     background-color: var(--marrom-escuro-10);
     color: var(--neutro-claro-100);
     width: 100%;
@@ -111,11 +102,11 @@
     height: 40px;
     border: none;
     border-radius: 8px;
+    margin-bottom: 20px;
     transition: background-color 0.3s ease;
-    cursor: pointer;
 }
 
-.apresentar-visitantes button:hover {
+.btn-voltar:hover {
     background-color: var(--marrom-escuro-30);
     cursor: pointer;
 }
@@ -136,22 +127,31 @@
         text-align: center;
       
     }
-    .visitante-card .botao-apresentado {
-        font-size: 16px;
-        padding: 8px 16px;
-        width: 50%;
-        margin: 0 auto;
-        border-radius: 8px;
+   
+    .status-linhas {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; 
+        
+    }
+    
+    .status-linhas span {
+        margin: auto 0;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--marron-escuro-10);
+        
+       
+    }
+    
+    .status-linhas button {
         background-color: var(--marrom-escuro-10);
         color: var(--neutro-claro-100);
         border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
         cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-        margin-top: 20px;
-        text-align: center;
-        align-items: center;
-        display: block;
-        align-self: center;
+       
     }
 
    

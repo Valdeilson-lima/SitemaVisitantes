@@ -4,7 +4,7 @@
     padding: 10px 10px;
     margin-top: 10px;
     width: 370px;
-    height: 590px;
+    min-height: 590px;
     border-radius: 8px;
     background-color: var(--neutro-claro-10);
     box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 
 }
 
@@ -34,8 +34,23 @@
     color: var(--marron-escuro-10);
 }
 
+
+.cadastro-visitante .form-check {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--marron-escuro-10);
+}
+
+
+
 .cadastro-visitante .form-control input {
-    padding: 10px;
+    padding: 12px;
     border: 1px solid var(--marrom-escuro-10);
     border-radius: 4px;
     font-size: 16px;
@@ -51,14 +66,23 @@
     outline: none;
     padding: 10px;
     width: 100%;
+    background-color: var(--neutro-claro-100);
+    border: 1px solid var(--marrom-escuro-10);
+    border-radius: 4px;
+    font-size: 16px;
 
 }
 
-.form-control input[type="checkbox"] {
+.form-check input[type="checkbox"] {
+    display: inline-block;
     margin: 0px 5px;
     width: 15px;
     height: 15px;
     margin-top: 3px;
+    margin-right: 10px;
+    
+    
+   
 
 }
 
@@ -69,10 +93,11 @@
     width: 100%;
     font-weight: bold;
     font-size: 18px;
-    height: 40px;
+    height: 45px;
     border: none;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 15px;
     transition: background-color 0.3s ease;
 }
 
@@ -89,7 +114,7 @@
     width: 100%;
     font-weight: bold;
     font-size: 18px;
-    height: 40px;
+    height: 45px;
     border: 1px solid var(--marrom-escuro-10);
     border-radius: 8px;
     transition: background-color 0.3s ease;

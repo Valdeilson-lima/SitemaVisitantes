@@ -6,7 +6,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { toast } from 'react-toastify'; // Caso queira usar um toast para erro
 
 function ListarVisitantes() {
-  const [visitantesDoDia, setVisitantesDoDia] = useState([]); // Estado para armazenar os visitantes
+  const [visitantes, setVisitantes] = useState([]); // Estado para armazenar os visitantes
   const [erro, setErro] = useState(null); // Estado para gerenciar erros
 
   // Carregar dados quando o componente for montado
@@ -23,7 +23,7 @@ function ListarVisitantes() {
         }));
 
         // Atualiza o estado com os visitantes
-        setVisitantesDoDia(visitantesList);
+        setVisitantes(visitantesList);
       } catch (error) {
         console.error('Erro ao carregar os visitantes:', error);
         setErro('Não foi possível carregar os visitantes'); // Mensagem de erro
@@ -32,13 +32,17 @@ function ListarVisitantes() {
     };
 
     fetchVisitantes(); // Chama a função para buscar os dados
-  }, []); // O array vazio significa que esse efeito só será chamado uma vez após o primeiro render
+  }, []); // O array vazio significa que esse efeito só será chamado uma vez após o primeiro 
 
-  // const formatarData = (data) => {
-  //   const [dia, mes, ano] = data.split('/'); // Supondo que a data esteja no formato DD/MM/YYYY
-  //   const dataFormatada = new Date(`${ano}-${mes}-${dia}`); // Converte para o formato correto
-  //   return dataFormatada.toLocaleDateString('pt-BR'); // Exibe a data formatada
-  // };
+  const dataHoje = new Date().toLocaleDateString('pt-BR');
+
+  const visitantesDoDia = visitantes.filter(v => {
+    if (!v.data_cadastro) return false; // Protege contra visitante sem data
+    const dataVisita = new Date(v.data_cadastro.seconds * 1000).toLocaleDateString('pt-BR');
+    return dataVisita === dataHoje;
+  });
+
+
 
   return (
     <div className="listar-visitantes">
@@ -55,17 +59,17 @@ function ListarVisitantes() {
               <h2>{visitante.nome_completo}</h2>
               <p className="cidade">{visitante.cidade_estado}</p>
               <p className="denominacao">{visitante.denominacao || 'Sem Denominação'}</p>
-              {/* <p className="data">
+              <p className="data">
                 {visitante.data_cadastro ?
                   new Date(visitante.data_cadastro.seconds * 1000).toLocaleDateString('pt-BR')
                   : 'Data inválida'}
-              </p> */}
+              </p>
 
               <div className="status-linhas">
                 <span className={visitante.evangelico ? "verde" : "vermelho"}>
                   {visitante.evangelico ? 'Evangélico' : 'Não Evangélico'}
                 </span>
-                
+
                 {/* <span className={visitante.autoriza_imagem ? "verde" : "vermelho"}>
                   {visitante.autoriza_imagem ? 'Termo Autorizado' : 'Termo Não Autorizado'}
                 </span> */}

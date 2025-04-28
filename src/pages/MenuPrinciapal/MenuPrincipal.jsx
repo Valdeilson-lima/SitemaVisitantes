@@ -41,8 +41,6 @@ function MenuPrincipal() {
             </div>
 
             <button className='logaout' onClick={handleLogout}>Sair</button>
-
-            <p>Você está logado como <strong></strong></p>
         </div>
 
     )
