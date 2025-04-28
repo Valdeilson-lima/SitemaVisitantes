@@ -11,7 +11,7 @@ function TelaLogin() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Função para validar email
+
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);

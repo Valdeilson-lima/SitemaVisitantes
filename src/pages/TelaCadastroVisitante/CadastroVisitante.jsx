@@ -56,7 +56,7 @@ function CadastroVisitante() {
             return true;
         } catch (err) {
             if (err.inner) {
-                toast.success(
+                toast.error(
                     <div>
                         <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Preencha os campos obrigatórios:</strong>
                         <ul style={{ marginTop: '5px', listStyleType: 'none', paddingLeft: 0, color: 'red', fontSize: '15px', fontWeight: 'bold' }}>
@@ -85,10 +85,10 @@ function CadastroVisitante() {
         try {
             const visitantesRef = collection(db, 'visitantes');
 
-            // 🛠️ Adiciona o campo data_cadastro com serverTimestamp()
+            
             await addDoc(visitantesRef, {
                 ...dados,
-                data_cadastro: serverTimestamp(), // <- Aqui está o segredo!
+                data_cadastro: serverTimestamp(),
             });
         } catch (error) {
             console.error("Erro ao cadastrar visitante: ", error);

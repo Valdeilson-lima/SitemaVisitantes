@@ -14,9 +14,9 @@ function MenuPrincipal() {
   
     const handleLogout = async () => {
         try {
-            await signOut(auth);  // Faz o logout do Firebase
+            await signOut(auth);  
             toast.success('Logout realizado com sucesso!');
-            navigate('/login'); // Redireciona o usuário para a página de login
+            navigate('/login'); 
         } catch (error) {
             console.log(error);
             toast.error('Erro ao fazer logout!');
