@@ -1,0 +1,123 @@
+.cadastro-visitante {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px;
+    margin-top: 10px;
+    width: 370px;
+    height: 590px;
+    border-radius: 8px;
+    background-color: var(--neutro-claro-10);
+    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cadastro-visitante h1 {
+    font-size: 36px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: var(--marron-escuro-10);
+}
+
+
+.cadastro-visitante .form-control {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 15px;
+
+}
+
+.cadastro-visitante .form-control label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--marron-escuro-10);
+}
+
+.cadastro-visitante .form-control input {
+    padding: 10px;
+    border: 1px solid var(--marrom-escuro-10);
+    border-radius: 4px;
+    font-size: 16px;
+    color: var(--marron-escuro-10);
+    outline: none;
+}
+
+.cadastro-visitante .form-control input:focus {
+    border-color: var(--marrom-escuro-30);
+}
+
+.cadastro-visitante .form-control textarea {
+    outline: none;
+    padding: 10px;
+    width: 100%;
+
+}
+
+.form-control input[type="checkbox"] {
+    margin: 0px 5px;
+    width: 15px;
+    height: 15px;
+    margin-top: 3px;
+
+}
+
+
+.cadastro-visitante button {
+    background-color: var(--marrom-escuro-10);
+    color: var(--neutro-claro-100);
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.cadastro-visitante button:hover {
+    background-color: var(--marrom-escuro-30);
+    cursor: pointer;
+}
+
+
+
+.cadastro-visitante .voltar {
+    background-color: transparent;
+    color: var(--marrom-escuro-10);
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    height: 40px;
+    border: 1px solid var(--marrom-escuro-10);
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.cadastro-visitante .voltar:hover {
+    background-color: var(--bronze-claro-80);
+    cursor: pointer;
+}
+
+
+
+@media screen and (min-width: 768px) {
+    .cadastro-visitante {
+        width: 600px;
+        max-width: 600px;
+        height: 630px;
+        padding: 10px 30px;
+
+    }
+
+    .cadastro-visitante h1 {
+        font-size: 48px;
+    }
+
+    .cadastro-visitante .form-control {
+        width: 100%;
+    }
+
+
+}

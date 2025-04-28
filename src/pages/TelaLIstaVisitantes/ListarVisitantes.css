@@ -1,0 +1,118 @@
+.listar-visitantes {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px;
+    margin-top: 10px;
+    width: 370px;
+    min-height: 620px;
+    border-radius: 8px;
+    background-color: var(--neutro-claro-10);
+    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+
+
+}
+
+.listar-visitantes h1 {
+    font-size: 36px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: var(--marron-escuro-10);
+}
+
+.lista-visitantes {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.visitante-card {
+    background-color: var(--neutro-claro-10);
+    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+.visitante-card h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--marron-escuro-10);
+}
+
+.visitante-card p {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--marron-escuro-10);
+}
+
+
+.status-linhas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-linhas span {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 10px;
+    color: var(--marron-escuro-10);
+}
+
+
+.verde {
+    color: #0f491d !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    background-color: transparent !important;
+}
+
+.vermelho {
+    color: #dc3545 !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    background-color: transparent !important;
+}
+
+.listar-visitantes button {
+    background-color: var(--marrom-escuro-10);
+    color: var(--neutro-claro-100);
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.listar-visitantes button:hover {
+    background-color: var(--marrom-escuro-30);
+    cursor: pointer;
+}
+
+
+@media screen and (min-width: 768px) {
+    .listar-visitantes {
+        width: 600px;
+        max-width: 600px;
+        min-height: 630px;
+        padding: 10px 30px;
+        
+    }
+
+    .listar-visitantes h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+      
+    }
+
+   
+}

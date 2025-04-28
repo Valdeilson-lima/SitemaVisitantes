@@ -1,0 +1,78 @@
+.tela-inicial {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 10px;
+    margin: 10px 0px;
+    margin-top: 30px;
+    width: 350px;
+    height: 300px;
+    border-radius: 8px;
+    background-color: var(--neutro-claro-10);
+    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+   
+  }
+
+  .tela-inicial h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: var(--marron-escuro-10);
+  }
+
+  .tela-inicial p {
+    font-size: 18px;
+    margin-bottom: 40px;
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--marron-escuro-10);
+  }
+
+  .tela-inicial button {
+    background-color: var(--marrom-escuro-10);
+    color: var(--neutro-claro-100);
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+
+  .tela-inicial button:hover {
+    background-color: var(--marrom-escuro-30);
+    cursor: pointer;
+  }
+
+
+@media screen and (min-width: 768px) {
+  .tela-inicial {
+    width: 100%;
+    padding: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    height: 300px;
+    margin-top: 30px;
+  }
+  .tela-inicial h1 {
+    font-size: 38px;
+    margin-bottom: 40px;
+  }
+
+  .tela-inicial p {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+
+  .tela-inicial button {
+    font-size: 18px;
+    height: 40px;
+    max-width: 80%;
+  }
+    
+}
+
+  
+  

@@ -1,0 +1,114 @@
+.tela-login {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px;
+    margin-top: 30px;
+    width: 370px;
+    height: 400px;
+    border-radius: 8px;
+    background-color: var(--neutro-claro-10);
+    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+    
+}
+
+.tela-login h1 {
+    font-size: 36px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: var(--marron-escuro-10);
+}
+
+.tela-login .form-control {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+
+}
+
+.tela-login .form-control label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--marron-escuro-10);
+}
+
+.tela-login .form-control input {
+    padding: 10px;
+    border: 1px solid var(--marrom-escuro-10);
+    border-radius: 4px;
+    font-size: 16px;
+    color: var(--marron-escuro-10);
+    outline: none;
+}
+
+.tela-login .form-control input:focus {
+    border-color: var(--marrom-escuro-30);
+}
+
+.form-control a {
+    text-decoration: none;
+    color: var(--marrom-escuro-10);
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: right;
+}
+
+.form-control a:hover {
+    text-decoration: underline;
+}
+
+.tela-login button {
+    background-color: var(--marrom-escuro-10);
+    color: var(--neutro-claro-100);
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.tela-login button:hover {
+    background-color: var(--marrom-escuro-30);
+    cursor: pointer;
+}
+
+.tela-login p {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 30px;
+    color: var(--marron-escuro-10);
+}
+
+.tela-login p a {
+    color: var(--marrom-escuro-10);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.tela-login p a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 768px) {
+    .tela-login {
+        width: 600px;
+        max-width: 600px;
+        height: 450px;
+
+    }
+
+    .tela-login h1 {
+        font-size: 48px;
+    }
+
+    .tela-login .form-control {
+        width: 100%;
+    }
+
+
+}

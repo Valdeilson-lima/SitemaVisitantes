@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root {
+  --marrom-10: #A67C58;
+  --marrom-20: #95704F;
+  --marrom-30: #856346;
+  --marrom-40: #74573E;
+  --marrom-50: #644A35;
+  --marrom-60: #533E2C;
+  --marrom-70: #423223;
+  --marrom-80: #32251A;
+  --marrom-90: #211912;
+  --marrom-95: #110C09;
+  --marrom-100: #000000;
+
+  --bege-10: #A67C58;
+  --bege-20: #AF8969;
+  --bege-30: #B89679;
+  --bege-40: #C1A38A;
+  --bege-50: #CAB09B;
+  --bege-60: #D3BEAC;
+  --bege-70: #DBCBBC;
+  --bege-80: #E4D8CD;
+  --bege-90: #EDE5DE;
+  --bege-95: #F6F2EE;
+  --bege-100: #FFFFFF;
+
+  --bronze-10: #73482F;
+  --bronze-20: #68412A;
+  --bronze-30: #5C3A26;
+  --bronze-40: #513221;
+  --bronze-50: #452B1C;
+  --bronze-60: #3A2418;
+  --bronze-70: #2E1D13;
+  --bronze-80: #22160E;
+  --bronze-90: #170E09;
+  --bronze-95: #0B0705;
+  --bronze-100: #000000;
+
+  --bronze-claro-10: #73482F;
+  --bronze-claro-20: #815A44;
+  --bronze-claro-30: #8F6D59;
+  --bronze-claro-40: #9D7F6D;
+  --bronze-claro-50: #AB9182;
+  --bronze-claro-60: #B9A497;
+  --bronze-claro-70: #C7B6AC;
+  --bronze-claro-80: #D5C8C1;
+  --bronze-claro-90: #E3DAD5;
+  --bronze-claro-95: #F1EDEA;
+  --bronze-claro-100: #FFFFFF;
+
+  --neutro-10: #D9BFB0;
+  --neutro-20: #C3AC9E;
+  --neutro-30: #AE998D;
+  --neutro-40: #98867B;
+  --neutro-50: #82736A;
+  --neutro-60: #6D6058;
+  --neutro-70: #574C46;
+  --neutro-80: #413935;
+  --neutro-90: #2B2623;
+  --neutro-95: #161312;
+  --neutro-100: #000000;
+
+  --neutro-claro-10: #D9BFB0;
+  --neutro-claro-20: #DDC5B8;
+  --neutro-claro-30: #E1CCC0;
+  --neutro-claro-40: #E4D2C8;
+  --neutro-claro-50: #E8D9D0;
+  --neutro-claro-60: #ECDFD8;
+  --neutro-claro-70: #F0E5DF;
+  --neutro-claro-80: #F4ECE7;
+  --neutro-claro-90: #F7F2EF;
+  --neutro-claro-95: #FBF9F7;
+  --neutro-claro-100: #FFFFFF;
+
+  --marrom-escuro-10: #402D29;
+  --marrom-escuro-20: #3A2925;
+  --marrom-escuro-30: #332421;
+  --marrom-escuro-40: #2D1F1D;
+  --marrom-escuro-50: #261B19;
+  --marrom-escuro-60: #201715;
+  --marrom-escuro-70: #1A1210;
+  --marrom-escuro-80: #130D0C;
+  --marrom-escuro-90: #0D0908;
+  --marrom-escuro-95: #060404;
+  --marrom-escuro-100: #000000;
+
+  --marrom-escuro-claro-10: #402D29;
+  --marrom-escuro-claro-20: #53423E;
+  --marrom-escuro-claro-30: #665754;
+  --marrom-escuro-claro-40: #796C69;
+  --marrom-escuro-claro-50: #8C817F;
+  --marrom-escuro-claro-60: #A09694;
+  --marrom-escuro-claro-70: #B3ABA9;
+  --marrom-escuro-claro-80: #C6C0BF;
+  --marrom-escuro-claro-90: #D9D5D4;
+  --marrom-escuro-claro-95: #ECEAEA;
+  --marrom-escuro-claro-100: #FFFFFF;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+
+body {
+  background-color: var(--neutro-claro-10);
+  color: var(--marrom-escuro-10);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+}
+
