@@ -10,13 +10,14 @@ import { Link, useNavigate } from 'react-router-dom'
 
 function MenuPrincipal() {
     const navigate = useNavigate();
+    const usuario = auth.currentUser;
 
-  
+
     const handleLogout = async () => {
         try {
-            await signOut(auth);  
+            await signOut(auth);
             toast.success('Logout realizado com sucesso!');
-            navigate('/login'); 
+            navigate('/login');
         } catch (error) {
             console.log(error);
             toast.error('Erro ao fazer logout!');
@@ -32,13 +33,22 @@ function MenuPrincipal() {
                 <Link to="/cadastrovisitante"><button>Cadastrar</button></Link>
             </div>
 
+
             <div className='menu'>
                 <Link to="/listarVisitantes"><button>Visualizar</button></Link>
             </div>
 
+
+
             <div className='menu'>
                 <Link to="/apresentarVisitantes"><button>Apresentar</button></Link>
             </div>
+
+
+            <div className='menu'>
+                <Link to="/CadastrarAviso"><button>Avisos</button></Link>
+            </div>
+
 
             <button className='logaout' onClick={handleLogout}>Sair</button>
         </div>

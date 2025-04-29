@@ -72,14 +72,14 @@ function ApresentarVisitantes() {
             <ul className="lista-visitantes">
                 {visitantesDoDia.map((visitante) => (
                     <li key={visitante.id} className="visitante-card">
-                        <h2>{visitante.nome_completo}</h2>
-                        <p className="cidade">{visitante.cidade_estado}</p>
-                        <p className="denominacao">{visitante.denominacao || 'Sem Denominação'}</p>
-                        <p className="data">
-                            {visitante.data_cadastro
+                        <h3><strong>Nome:</strong> {visitante.nome_completo}</h3>
+                        <p className="cidade"><strong>Cidade:</strong>  {visitante.cidade_estado}</p>
+                        <p className="denominacao"><strong>Denominação: </strong>{visitante.denominacao || 'Sem Denominação'}</p>
+                        <p className="data"> <strong>Data:  </strong> {visitante.data_cadastro
                                 ? new Date(visitante.data_cadastro.seconds * 1000).toLocaleDateString('pt-BR')
                                 : 'Data inválida'}
                         </p>
+                        <p className="observacao"><strong>Observação:</strong>  {visitante.observacao || 'Sem observacao'}</p>
 
                         <div className="status-linhas">
                             <span className={visitante.evangelico ? "verde" : "vermelho"}>

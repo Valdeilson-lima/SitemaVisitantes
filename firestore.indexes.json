@@ -1,0 +1,14 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "visitantes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "nome", "order": "ASCENDING" },
+        { "fieldPath": "data", "order": "ASCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
+
