@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth"; // ✅ Correção
+import { onAuthStateChanged } from "firebase/auth"; 
 import { auth } from "./firebaseConfig";
 
 import TelaInicial from "./src/pages/TelaInicial/TelaInicial";
@@ -11,7 +11,8 @@ import CadastroVisitante from "./src/pages/TelaCadastroVisitante/CadastroVisitan
 import TelaListaVisitantes from "./src/pages/TelaLIstaVisitantes/ListarVisitantes";
 import ApresentarVisitantes from "./src/pages/TelaApresentarVisitantes/ApresentarVisitantes";
 import EditarVisitante from "./src/pages/TelaEditarVisitante/EditarVIsitante";
-import CadatrarAvisos from "./src/pages/Telavisos/CadastrarAviso";
+import CadastrarAvisos from "./src/pages/TelaCadastroAvisos/CadastrarAviso";
+import ListarAvisos from "./src/pages/TelaListarAvisos/ListarAvisos";
 
 
 export default function RoutesApp() {
@@ -51,7 +52,8 @@ export default function RoutesApp() {
         <Route path="/listarVisitantes" element={usuario ? <TelaListaVisitantes /> : <Navigate to="/login" />} />
         <Route path="/EditarVisitante/:id" element={usuario ? <EditarVisitante /> : <Navigate to="/login" />} />
         <Route path="/apresentarVisitantes" element={usuario ? <ApresentarVisitantes /> : <Navigate to="/login" />} />
-        <Route path="/CadastrarAviso" element={usuario ? <CadatrarAvisos /> : <Navigate to="/login" />} />
+        <Route path="/CadastrarAviso" element={usuario ? <CadastrarAvisos /> : <Navigate to="/login" />} />
+        <Route path="/ListarAvisos" element={usuario ? <ListarAvisos /> : <Navigate to="/login" />} />
         <Route path="*" element={<Navigate to={usuario ? "/home" : "/login"} />} />
       </Routes>
     </BrowserRouter>

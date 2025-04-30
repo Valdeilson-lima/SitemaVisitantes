@@ -44,10 +44,16 @@ function MenuPrincipal() {
                 <Link to="/apresentarVisitantes"><button>Apresentar</button></Link>
             </div>
 
+            <div className='menu'>
+                <Link to="/CadastrarAviso"><button>Cadastrar Avisos</button></Link>
+            </div>
 
             <div className='menu'>
-                <Link to="/CadastrarAviso"><button>Avisos</button></Link>
+                <Link to="/ListarAvisos"><button>Visulizar Avisos</button></Link>
             </div>
+
+
+           
 
 
             <button className='logaout' onClick={handleLogout}>Sair</button>

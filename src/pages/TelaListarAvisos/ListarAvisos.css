@@ -1,0 +1,99 @@
+.listar-avisos {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px;
+    margin-top: 10px;
+    width: 370px;
+    min-height: 620px;
+    border-radius: 8px;
+    background-color: var(--neutro-claro-10);
+    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.listar-avisos h2 {
+    font-size: 28px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: var(--marron-escuro-10);
+}
+
+.aviso-card {
+    background-color: var(--neutro-claro-10);
+    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.aviso-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--marron-escuro-10);
+}
+
+.aviso-card p {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--marron-escuro-10);
+}
+
+.botao-feito {
+    background-color: var(--marrom-escuro-10);
+    color: var(--neutro-claro-100);
+    font-weight: bold;
+    font-size: 14px;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botao-feito:hover {
+    background-color: var(--marrom-escuro-30);
+}
+
+.aviso-feito {
+    color: #0f491d;
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: transparent;
+    padding: 8px 16px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.listar-avisos .voltar {
+    background-color: transparent;
+    color: var(--marrom-escuro-10);
+    width: 100%;
+    font-weight: bold;
+    font-size: 18px;
+    height: 45px;
+    border: 1px solid var(--marrom-escuro-10);
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.listar-avisos .voltar:hover {
+    background-color: var(--bronze-claro-80);
+    cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+    .listar-avisos {
+        width: 600px;
+        max-width: 600px;
+        min-height: 630px;
+        padding: 10px 30px;
+    }
+
+    .listar-avisos h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+}

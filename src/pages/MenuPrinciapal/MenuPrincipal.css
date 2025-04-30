@@ -3,8 +3,8 @@
     flex-direction: column;
     padding: 10px 10px;
     margin-top: 10px;
-    width: 370px;
-    min-height: 500px;
+    min-width: 370px;
+    min-height: 580px;
     border-radius: 8px;
     background-color: var(--neutro-claro-10);
     box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
@@ -40,7 +40,7 @@
     text-align: center;
     padding: 10px 10px;
     width: 100%;
-    margin-bottom: 35px;
+    margin-bottom: 30px;
 
 }
 
