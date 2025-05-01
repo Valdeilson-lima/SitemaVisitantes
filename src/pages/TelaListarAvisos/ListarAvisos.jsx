@@ -15,6 +15,11 @@ function ListarAvisos() {
             querySnapshot.forEach((doc) => {
                 lista.push({ id: doc.id, ...doc.data() });
             });
+
+            lista.sort((a, b) => {
+                return (a.feito === b.feito) ? 0 : a.feito ? 1 : -1;
+            });
+
             setAvisos(lista);
         }
 
@@ -66,7 +71,7 @@ function ListarAvisos() {
             )}
 
             <Link to="/home">
-                <button className="voltar">Voltar</button>
+                <button className="voltar">Voltar ao menu</button>
             </Link>
         </div>
     );

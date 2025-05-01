@@ -67,21 +67,24 @@
 }
 
 .listar-avisos .voltar {
-    background-color: transparent;
-    color: var(--marrom-escuro-10);
+    background-color: var(--marrom-escuro-10);
+    color: var(--neutro-claro-100);
     width: 100%;
     font-weight: bold;
     font-size: 18px;
     height: 45px;
-    border: 1px solid var(--marrom-escuro-10);
+    border: none;
     border-radius: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
     transition: background-color 0.3s ease;
 }
 
 .listar-avisos .voltar:hover {
-    background-color: var(--bronze-claro-80);
+    background-color: var(--marrom-escuro-30);
     cursor: pointer;
 }
+
 
 @media screen and (min-width: 768px) {
     .listar-avisos {
@@ -89,11 +92,15 @@
         max-width: 600px;
         min-height: 630px;
         padding: 10px 30px;
+        
     }
 
-    .listar-avisos h2 {
+    .listar-avisos h1 {
         font-size: 2.5rem;
         margin-bottom: 20px;
         text-align: center;
+      
     }
+
+   
 }

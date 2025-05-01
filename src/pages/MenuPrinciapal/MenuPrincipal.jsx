@@ -49,7 +49,7 @@ function MenuPrincipal() {
             </div>
 
             <div className='menu'>
-                <Link to="/ListarAvisos"><button>Visulizar Avisos</button></Link>
+                <Link to="/ListarAvisos"><button>Visualizar Avisos</button></Link>
             </div>
 
 
