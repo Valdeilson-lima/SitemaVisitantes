@@ -54,7 +54,7 @@ function ListarVisitantes() {
 
       <ul className="lista-visitantes">
         {visitantesDoDia.length === 0 ? (
-          <p>Não há visitantes cadastrados no momento.</p> 
+          <p>Não há visitantes cadastrados para esse dia.</p> 
         ) : (
           visitantesDoDia.map((visitante) => (
             <li key={visitante.id} className="visitante-card">
@@ -65,7 +65,7 @@ function ListarVisitantes() {
                   new Date(visitante.data_cadastro.seconds * 1000).toLocaleDateString('pt-BR')
                   : 'Data inválida'}
               </p>
-              <p className="observacao"><strong>Observação:</strong>  {visitante.observacao || 'Sem observacao'}</p>
+              <p className="observacao"><strong>Observação:</strong>  {visitante.observacao || 'Sem observação'}</p>
 
               <div className="status-linhas">
                 <span className={visitante.evangelico ? "verde" : "vermelho"}>

@@ -1,4 +1,4 @@
-.tela-login {
+.cadastro-usuario {
     display: flex;
     flex-direction: column;
     padding: 10px 10px;
@@ -11,7 +11,7 @@
     
 }
 
-.tela-login h1 {
+.cadastro-usuario h2 {
     font-size: 28px;
     text-align: center;
     font-weight: bold;
@@ -19,7 +19,7 @@
     color: var(--marron-escuro-10);
 }
 
-.tela-login .form-control {
+.cadastro-usuario .form-control {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -27,14 +27,14 @@
 
 }
 
-.tela-login .form-control label {
+.cadastro-usuario .form-control label {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
     color: var(--marron-escuro-10);
 }
 
-.tela-login .form-control input {
+.cadastro-usuario .form-control input, select {
     padding: 12px;
     border: 1px solid var(--marrom-escuro-10);
     border-radius: 4px;
@@ -43,24 +43,13 @@
     outline: none;
 }
 
-.tela-login .form-control input:focus {
+.cadastro .form-control input:focus {
     border-color: var(--marrom-escuro-30);
 }
 
-.form-control a {
-    text-decoration: none;
-    color: var(--marrom-escuro-10);
-    font-weight: bold;
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: right;
-}
 
-.form-control a:hover {
-    text-decoration: underline;
-}
 
-.tela-login button {
+.cadastro-usuario button {
     background-color: var(--marrom-escuro-10);
     color: var(--neutro-claro-100);
     width: 100%;
@@ -73,41 +62,42 @@
     transition: background-color 0.3s ease;
 }
 
-.tela-login button:hover {
+.cadastro-usuario button:hover {
     background-color: var(--marrom-escuro-30);
     cursor: pointer;
 }
 
-.tela-login p {
-    text-align: center;
-    font-size: 18px;
-    margin-top: 30px;
-    color: var(--marron-escuro-10);
-}
-
-.tela-login p a {
+.cadastro-usuario .btn-voltar {
+    background-color: transparent;
     color: var(--marrom-escuro-10);
-    text-decoration: none;
+    width: 100%;
     font-weight: bold;
+    font-size: 18px;
+    height: 45px;
+    border: 1px solid var(--marrom-escuro-10);
+    border-radius: 8px;
+    
 }
 
-.tela-login p a:hover {
-    text-decoration: underline;
+.cadastro-usuario .btn-voltar:hover {
+    background-color: var(--bronze-claro-80);
+    cursor: pointer;
 }
+
 
 @media screen and (min-width: 768px) {
-    .tela-login {
+    .cadastro-usuario {
         width: 600px;
-        max-width: 600px;
-        height: 450px;
+        width: 600px;
+        min-height: 450px;
 
     }
 
-    .tela-login h1 {
+    .cadastro-usuario h1 {
         font-size: 48px;
     }
 
-    .tela-login .form-control {
+    .cadastro-usuario .form-control {
         width: 100%;
     }
 

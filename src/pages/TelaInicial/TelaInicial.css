@@ -5,9 +5,9 @@
     text-align: center;
     padding: 20px 10px;
     margin: 10px 0px;
-    margin-top: 30px;
+    margin-top: 50px;
     width: 350px;
-    height: 300px;
+    min-height: 370px;
     border-radius: 8px;
     background-color: var(--neutro-claro-10);
     box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
@@ -22,10 +22,10 @@
   }
 
   .tela-inicial p {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 40px;
-    line-height: 1.5;
-    font-weight: 500;
+    line-height: 2;
+    font-weight: 700;
     color: var(--marron-escuro-10);
   }
 
@@ -34,8 +34,8 @@
     color: var(--neutro-claro-100);
     width: 100%;
     font-weight: bold;
-    font-size: 18px;
-    height: 40px;
+    font-size: 20px;
+    height: 50px;
     border: none;
     border-radius: 8px;
     transition: background-color 0.3s ease;

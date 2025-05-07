@@ -1,8 +1,9 @@
 import './CadastrarAviso.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { db } from '../../../firebaseConfig';
+import { db, auth } from '../../../firebaseConfig';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useState } from 'react';
+import { salvarLog, buscarNomeUsuario } from '../../services/loginServices';
 import { toast } from 'react-toastify';
 
 function CadastrarAvisos() {
@@ -32,6 +33,12 @@ function CadastrarAvisos() {
       setTitulo('');
       setDescricao('');
       navigate('/ListarAvisos');
+
+      const nomeUsuario = await buscarNomeUsuario(auth.currentUser.uid);
+      await salvarLog(
+        auth.currentUser.uid, nomeUsuario || 'Usuário sem nome',
+        'Realizou Cadastro de um aviso.'
+      );
     } catch (error) {
       console.error(error);
       toast.error("Erro ao cadastrar aviso.");

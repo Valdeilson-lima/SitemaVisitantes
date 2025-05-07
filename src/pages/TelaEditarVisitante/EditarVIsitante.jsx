@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../../../firebaseConfig';
+import { db, auth } from '../../../firebaseConfig';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { salvarLog, buscarNomeUsuario } from '../../services/loginServices';
 import { toast } from 'react-toastify';
 import './EditarVisitante.css';
 
@@ -51,6 +52,8 @@ function EditarVisitante() {
         setEtapa((prevEtapa) => prevEtapa - 1);
     };
 
+
+
     // Função para atualizar os dados do visitante
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -60,6 +63,12 @@ function EditarVisitante() {
             await updateDoc(docRef, formData);
             toast.success('Visitante atualizado com sucesso!');
             navigate('/listarVisitantes');
+
+            const nomeUsuario = await buscarNomeUsuario(auth.currentUser.uid);
+            await salvarLog(
+                auth.currentUser.uid, nomeUsuario || 'Usuário sem nome',
+                'Editou um visitante.'
+            );
         } catch (error) {
             console.error('Erro ao atualizar o visitante:', error);
             toast.error('Erro ao atualizar os dados do visitante');

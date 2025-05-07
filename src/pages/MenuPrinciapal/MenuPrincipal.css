@@ -78,7 +78,7 @@
     .menu-principal {
         width: 600px;
         max-width: 630px;
-        height: 460px;
+        min-height: 460px;
         padding: 10px 30px;
 
     }

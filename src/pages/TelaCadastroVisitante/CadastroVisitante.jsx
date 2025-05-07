@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import { db, addDoc, collection, serverTimestamp } from '../../../firebaseConfig';
-
+import { db, addDoc, collection, serverTimestamp, auth } from '../../../firebaseConfig';
+import { salvarLog, buscarNomeUsuario } from '../../services/loginServices';
 import './CadastroVisitante.css';
 import { toast } from 'react-toastify';
+
 
 const schema = yup.object().shape({
     nome_completo: yup.string().required('Nome é obrigatório'),
@@ -85,7 +86,7 @@ function CadastroVisitante() {
         try {
             const visitantesRef = collection(db, 'visitantes');
 
-            
+
             await addDoc(visitantesRef, {
                 ...dados,
                 data_cadastro: serverTimestamp(),
@@ -101,11 +102,19 @@ function CadastroVisitante() {
             await cadastrarVisitante(formData);
             toast.success('Visitante cadastrado com sucesso!');
             navigate('/listarVisitantes');
+            const nomeUsuario = await buscarNomeUsuario(auth.currentUser.uid);
+            await salvarLog(
+                auth.currentUser.uid, nomeUsuario || 'Usuário sem nome',
+                'Realizou Cadastro de um Visitante.'
+            );
+
         } catch (err) {
             console.error(err);
             toast.error('Erro ao cadastrar visitante.');
         }
     };
+
+
 
     return (
         <div className="cadastro-visitante">
@@ -204,7 +213,7 @@ function CadastroVisitante() {
                                 rows="5"
                             />
                         </div>
-                       
+
                         {/* <div className="form-control">
                             <label>
                                 <input

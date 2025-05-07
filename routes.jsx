@@ -13,6 +13,8 @@ import ApresentarVisitantes from "./src/pages/TelaApresentarVisitantes/Apresenta
 import EditarVisitante from "./src/pages/TelaEditarVisitante/EditarVIsitante";
 import CadastrarAvisos from "./src/pages/TelaCadastroAvisos/CadastrarAviso";
 import ListarAvisos from "./src/pages/TelaListarAvisos/ListarAvisos";
+import  CadastrarUsuario from "./src/pages/TelaCadastroUsuario/CadastroUsuario";
+import ListarLogs from "./src/pages/ListarLogs/logs";
 
 
 export default function RoutesApp() {
@@ -54,6 +56,8 @@ export default function RoutesApp() {
         <Route path="/apresentarVisitantes" element={usuario ? <ApresentarVisitantes /> : <Navigate to="/login" />} />
         <Route path="/CadastrarAviso" element={usuario ? <CadastrarAvisos /> : <Navigate to="/login" />} />
         <Route path="/ListarAvisos" element={usuario ? <ListarAvisos /> : <Navigate to="/login" />} />
+        <Route path="/CadastrarUsuario" element={usuario ? <CadastrarUsuario /> : <Navigate to="/login" />} />
+        <Route path="/ListarLogs" element={usuario ? <ListarLogs /> : <Navigate to="/login" />} />
         <Route path="*" element={<Navigate to={usuario ? "/home" : "/login"} />} />
       </Routes>
     </BrowserRouter>

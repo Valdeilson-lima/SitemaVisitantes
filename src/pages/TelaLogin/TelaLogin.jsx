@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
+import { salvarLog, buscarNomeUsuario } from '../../services/loginServices';
 import { toast } from 'react-toastify'
 
 function TelaLogin() {
@@ -33,8 +34,14 @@ function TelaLogin() {
     setLoading(true);
 
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      const nomeUsuario = await buscarNomeUsuario(user.uid);
+      await salvarLog(
+        auth.currentUser.uid, nomeUsuario || 'Usuário sem nome',
+        'Realizou login com sucesso.'
+      );
+
       toast.success('Login realizado com sucesso!');
       navigate('/home');
     } catch (error) {
@@ -62,10 +69,10 @@ function TelaLogin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          
+
         </div>
         <button type="submit">Acessar</button>
-       
+
       </form>
 
 
