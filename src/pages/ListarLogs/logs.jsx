@@ -6,6 +6,7 @@ import './logs.css';
 
 function ListarLogs() {
   const [logs, setLogs] = useState([]);
+  const [logsDoDia, setLogsDoDia] = useState([]);
 
   useEffect(() => {
     async function fetchLogs() {
@@ -21,11 +22,22 @@ function ListarLogs() {
     fetchLogs();
   }, []);
 
+  
+  useEffect(() => {
+    const logsDoDia = logs.filter(log => {
+      const dataLog = log.data?.toDate();
+      if (!dataLog) return false;
+      const dataAtual = new Date();
+      return dataLog.getDate() === dataAtual.getDate() && dataLog.getMonth() === dataAtual.getMonth() && dataLog.getFullYear() === dataAtual.getFullYear();
+    });
+    setLogsDoDia(logsDoDia);
+  }, [logs]);
+
   return (
     <div className='lista-logs'>
       <h2>Logs de Atividades</h2>
       <ul>
-        {logs.map(log => (
+        {logsDoDia.map(log => (
           <li key={log.id}>
             <p><strong>Usuario:</strong> {log.nomeUsuario}</p>
             <p><strong>Ação:</strong> {log.acao}</p>
