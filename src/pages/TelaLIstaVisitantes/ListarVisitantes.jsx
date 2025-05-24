@@ -133,25 +133,6 @@ function ListarVisitantes() {
           visitantesDoDia.map((visitante) => (
             <li key={visitante.id} className="visitante-card">
               <h3><FaUser /> {visitante.nome_completo}</h3>
-              <p>
-                <strong><FaMapMarkerAlt /> Cidade:</strong>
-                <span>{visitante.cidade_estado || 'Não informado'}</span>
-              </p>
-              <p>
-                <strong><FaChurch /> Denominação:</strong>
-                <span>{visitante.denominacao || 'Sem Denominação'}</span>
-              </p>
-              <p>
-                <strong><FaCalendarAlt /> Data:</strong>
-                <span>
-                  {visitante.data_cadastro
-                    ? new Date(visitante.data_cadastro.seconds * 1000).toLocaleDateString('pt-BR')
-                    : 'Data inválida'}
-                </span>
-              </p>
-              <p>
-                <strong><FaCommentAlt /> Observação:</strong>
-                <span>{visitante.observacao || 'Sem observação'}</span>
               <p><strong><FaMapMarkerAlt /> Cidade:</strong> {visitante.cidade_estado || 'Não informado'}</p>
               <p><strong><FaChurch /> Denominação:</strong> {visitante.denominacao || 'Sem Denominação'}</p>
               <p><strong><FaCalendarAlt /> Data:</strong> {visitante.data_cadastro ?
