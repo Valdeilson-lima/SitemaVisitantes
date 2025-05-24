@@ -162,11 +162,12 @@
   justify-content: center;
   gap: 10px;
   padding: 0;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .btn-voltar:hover {
   background-color: var(--bronze-claro-80) !important;
-  cursor: pointer;
 }
 
 .verde {

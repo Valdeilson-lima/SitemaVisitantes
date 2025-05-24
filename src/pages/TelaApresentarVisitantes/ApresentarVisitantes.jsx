@@ -135,8 +135,8 @@ function ApresentarVisitantes() {
                 </ul>
             )}
 
-            <Link to="/menu">
-                <button className='btn-voltar'><FaArrowLeft /> Voltar ao Menu</button>
+            <Link to="/menu" className="btn-voltar">
+                <FaArrowLeft /> Voltar ao Menu
             </Link>
         </div>
     );

@@ -151,26 +151,27 @@
 }
 
 .btn-voltar {
-  background-color: transparent;
-  color: var(--marrom-escuro-10);
+  background-color: transparent !important;
+  color: var(--marrom-escuro-10) !important;
   width: 100%;
-  font-weight: 600;
-  font-size: 16px;
-  height: 45px;
-  border: 2px solid var(--marrom-escuro-10);
+  font-weight: bold;
+  font-size: 18px;
+  height: 40px;
+  border: 1px solid var(--marrom-escuro-10) !important;
   border-radius: 8px;
-  margin-top: auto;
   margin-bottom: 20px;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  padding: 0;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .btn-voltar:hover {
-  background-color: var(--bronze-claro-80);
-  transform: translateY(-1px);
+  background-color: var(--bronze-claro-80) !important;
 }
 
 .mensagem-vazia {
