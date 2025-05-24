@@ -1,148 +1,328 @@
 .cadastro-visitante {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 10px;
-    margin-top: 10px;
-    width: 370px;
-    min-height: 645px;
-    border-radius: 8px;
-    background-color: var(--neutro-claro-10);
-    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 20px auto;
+  width: 370px;
+  min-height: 645px;
+  border-radius: 12px;
+  background-color: var(--neutro-claro-10);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  max-width: 800px;
 }
 
 .cadastro-visitante h1 {
-    font-size: 28px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: var(--marron-escuro-10);
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: var(--marron-escuro-10);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
+.title-icon {
+  font-size: 32px;
+  color: var(--marrom-escuro-10);
+}
+
+.cadastro-visitante h1::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--marrom-escuro-10);
+  border-radius: 2px;
+}
 
 .cadastro-visitante .form-control {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 20px;
-
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .cadastro-visitante .form-control label {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: var(--marron-escuro-10);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--marron-escuro-10);
+  display: flex;
+  align-items: center;
 }
 
-
-.cadastro-visitante .form-check {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: var(--marron-escuro-10);
+.cadastro-visitante .form-control label::after {
+  display: none;
 }
 
-
-
-.cadastro-visitante .form-control input {
-    padding: 12px;
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 4px;
-    font-size: 16px;
-    color: var(--marron-escuro-10);
-    outline: none;
+.cadastro-visitante .form-control label[for="nome_completo"]::after {
+  content: "*";
+  color: #ff4444;
+  margin-left: 4px;
+  display: inline-block;
 }
 
-.cadastro-visitante .form-control input:focus {
-    border-color: var(--marrom-escuro-30);
-}
-
+.cadastro-visitante .form-control input,
 .cadastro-visitante .form-control textarea {
-    outline: none;
-    padding: 10px;
-    width: 100%;
-    background-color: var(--neutro-claro-100);
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 4px;
-    font-size: 16px;
+  padding: 12px;
+  border: 2px solid var(--marrom-escuro-10);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--marron-escuro-10);
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: var(--neutro-claro-100);
+}
 
+.cadastro-visitante .form-control input:focus,
+.cadastro-visitante .form-control textarea:focus {
+  border-color: var(--marrom-escuro-30);
+  box-shadow: 0 0 0 3px rgba(var(--marrom-escuro-10-rgb), 0.1);
+}
+
+.cadastro-visitante .form-control input::placeholder,
+.cadastro-visitante .form-control textarea::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: var(--neutro-claro-100);
+  transition: all 0.3s ease;
+}
+
+.form-check:hover {
+  background-color: rgba(var(--marrom-escuro-10-rgb), 0.05);
 }
 
 .form-check input[type="checkbox"] {
-    display: inline-block;
-    margin: 0px 5px;
-    width: 15px;
-    height: 15px;
-    margin-top: 3px;
-    margin-right: 10px;
-    
-    
-   
-
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  cursor: pointer;
+  accent-color: var(--marrom-escuro-10);
 }
 
+.form-check label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--marron-escuro-10);
+  cursor: pointer;
+}
 
 .cadastro-visitante button {
-    background-color: var(--marrom-escuro-10);
-    color: var(--neutro-claro-100);
-    width: 100%;
-    font-weight: bold;
-    font-size: 18px;
-    height: 45px;
-    border: none;
-    border-radius: 8px;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    transition: background-color 0.3s ease;
+  background-color: var(--marrom-escuro-10);
+  color: var(--neutro-claro-100);
+  width: 100%;
+  font-weight: 600;
+  font-size: 16px;
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .cadastro-visitante button:hover {
-    background-color: var(--marrom-escuro-30);
-    cursor: pointer;
+  background-color: var(--marrom-escuro-30);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
+.cadastro-visitante button:active {
+  transform: translateY(0);
+}
 
 .cadastro-visitante .voltar {
-    background-color: transparent;
-    color: var(--marrom-escuro-10);
-    width: 100%;
-    font-weight: bold;
-    font-size: 18px;
-    height: 45px;
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+  background-color: transparent;
+  color: var(--marrom-escuro-10);
+  border: 2px solid var(--marrom-escuro-10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .cadastro-visitante .voltar:hover {
-    background-color: var(--bronze-claro-80);
-    cursor: pointer;
+  background-color: var(--bronze-claro-80);
+  color: var(--marrom-escuro-10);
 }
 
+.voltar svg {
+  font-size: 16px;
+}
 
+/* Progresso do formulário */
+.progress-bar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  gap: 20px;
+}
 
+.progress-step {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #666;
+  position: relative;
+}
+
+.progress-step.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.progress-step.completed {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* Responsividade */
 @media screen and (min-width: 768px) {
-    .cadastro-visitante {
-        width: 600px;
-        max-width: 600px;
-        height: 630px;
-        padding: 10px 30px;
+  .cadastro-visitante {
+    width: 600px;
+    max-width: 600px;
+    padding: 30px;
+  }
 
-    }
+  .cadastro-visitante h1 {
+    font-size: 36px;
+  }
 
-    .cadastro-visitante h1 {
-        font-size: 48px;
-    }
+  .cadastro-visitante .form-control {
+    margin-bottom: 25px;
+  }
 
-    .cadastro-visitante .form-control {
-        width: 100%;
-    }
+  .cadastro-visitante .form-control label {
+    font-size: 18px;
+  }
 
+  .cadastro-visitante .form-control input,
+  .cadastro-visitante .form-control textarea {
+    padding: 14px;
+    font-size: 16px;
+  }
+}
 
+/* Estado de erro */
+.cadastro-visitante .form-control.error input,
+.cadastro-visitante .form-control.error textarea {
+  border-color: #ff4444;
+}
+
+.cadastro-visitante .error-message {
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.cadastro-visitante .error-message::before {
+  content: "⚠️";
+  margin-right: 5px;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ffffff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .cadastro-visitante {
+    padding: 15px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+.loading-button {
+  background-color: #cccccc !important;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-icon {
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  vertical-align: middle;
 }

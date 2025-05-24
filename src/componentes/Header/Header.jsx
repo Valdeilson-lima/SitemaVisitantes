@@ -19,7 +19,7 @@ function Header() {
 
   function navegarParaTelaInicial() {
     if (usuarioLogado) {
-      navigate("/home");
+      navigate("/menu");
     } else {
       navigate("/");
     }

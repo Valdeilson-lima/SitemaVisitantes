@@ -1,115 +1,153 @@
 .tela-login {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 10px;
-    margin-top: 30px;
-    width: 370px;
-    min-height: 370px;
-    border-radius: 8px;
-    background-color: var(--neutro-claro-10);
-    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
-    
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 30px auto;
+  width: 90%;
+  max-width: 370px;
+  min-height: 370px;
+  border-radius: 8px;
+  background-color: var(--neutro-claro-10);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .tela-login h1 {
-    font-size: 28px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: var(--marron-escuro-10);
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: var(--marron-escuro-10);
 }
 
 .tela-login .form-control {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 20px;
-
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .tela-login .form-control label {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: var(--marron-escuro-10);
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--marron-escuro-10);
 }
 
 .tela-login .form-control input {
-    padding: 12px;
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 4px;
-    font-size: 16px;
-    color: var(--marron-escuro-10);
-    outline: none;
+  padding: 12px;
+  border: 2px solid var(--marrom-escuro-10);
+  border-radius: 4px;
+  font-size: 16px;
+  color: var(--marron-escuro-10);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.tela-login .form-control input.error {
+  border-color: #ff4444;
 }
 
 .tela-login .form-control input:focus {
-    border-color: var(--marrom-escuro-30);
+  border-color: var(--marrom-escuro-30);
+  box-shadow: 0 0 0 2px rgba(var(--marrom-escuro-30-rgb), 0.2);
 }
 
-.form-control a {
-    text-decoration: none;
-    color: var(--marrom-escuro-10);
-    font-weight: bold;
-    font-size: 14px;
-    margin-top: 10px;
-    text-align: right;
+.error-message {
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
-.form-control a:hover {
-    text-decoration: underline;
+.forgot-password {
+  text-decoration: none;
+  color: var(--marrom-escuro-10);
+  font-weight: 500;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: right;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+  color: var(--marrom-escuro-30);
+  text-decoration: underline;
 }
 
 .tela-login button {
-    background-color: var(--marrom-escuro-10);
-    color: var(--neutro-claro-100);
-    width: 100%;
-    font-weight: bold;
-    font-size: 20px;
-    height: 50px;
-    border: none;
-    margin-top: 20px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+  background-color: var(--marrom-escuro-10);
+  color: var(--neutro-claro-100);
+  width: 100%;
+  font-weight: bold;
+  font-size: 18px;
+  height: 50px;
+  border: none;
+  margin-top: 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
-.tela-login button:hover {
-    background-color: var(--marrom-escuro-30);
-    cursor: pointer;
+.tela-login button:hover:not(:disabled) {
+  background-color: var(--marrom-escuro-30);
+  cursor: pointer;
+  transform: translateY(-1px);
+}
+
+.tela-login button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .tela-login p {
-    text-align: center;
-    font-size: 18px;
-    margin-top: 30px;
-    color: var(--marron-escuro-10);
+  text-align: center;
+  font-size: 18px;
+  margin-top: 30px;
+  color: var(--marron-escuro-10);
 }
 
 .tela-login p a {
-    color: var(--marrom-escuro-10);
-    text-decoration: none;
-    font-weight: bold;
+  color: var(--marrom-escuro-10);
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .tela-login p a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 @media screen and (min-width: 768px) {
-    .tela-login {
-        width: 600px;
-        max-width: 600px;
-        height: 450px;
+  .tela-login {
+    width: 100%;
+    max-width: 450px;
+    padding: 30px;
+  }
 
-    }
+  .tela-login h1 {
+    font-size: 36px;
+  }
 
-    .tela-login h1 {
-        font-size: 48px;
-    }
+  .tela-login .form-control label {
+    font-size: 18px;
+  }
 
-    .tela-login .form-control {
-        width: 100%;
-    }
-
-
+  .tela-login .form-control input {
+    font-size: 16px;
+  }
 }

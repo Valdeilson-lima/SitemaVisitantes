@@ -1,118 +1,217 @@
 .listar-visitantes {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 10px;
-    margin-top: 10px;
-    width: 370px;
-    min-height: 620px;
-    border-radius: 8px;
-    background-color: var(--neutro-claro-10);
-    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
-
-
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px;
+  margin-top: 10px;
+  width: 370px;
+  min-height: 620px;
+  border-radius: 8px;
+  background-color: var(--neutro-claro-10);
+  box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
 }
 
 .listar-visitantes h1 {
-    font-size: 28px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: var(--marron-escuro-10);
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: var(--marron-escuro-10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.listar-visitantes h1 i {
+  font-size: 32px;
+  color: var(--marron-escuro-10);
 }
 
 .lista-visitantes {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin: 20px 0;
 }
 
 .visitante-card {
-    background-color: var(--neutro-claro-10);
-    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
-    padding: 16px;
-    border-radius: 10px;
-    transition: box-shadow 0.3s ease;
+  background: var(--neutro-claro-10);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.visitante-card h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: var(--marron-escuro-10);
+.visitante-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.visitante-card h3 {
+  margin: 0 0 15px 0;
+  color: var(--marrom-escuro-10);
+  font-size: 1.2rem;
+  border-bottom: 2px solid var(--bronze-claro-80);
+  padding-bottom: 8px;
 }
 
 .visitante-card p {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--marron-escuro-10);
+  margin: 12px 0;
+  color: var(--marrom-escuro-10);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
+.visitante-card p strong {
+  color: var(--marrom-escuro-30);
+  min-width: 120px;
+}
 
 .status-linhas {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--bronze-claro-80);
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .status-linhas span {
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 10px;
-    color: var(--marron-escuro-10);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  min-width: 160px;
+  justify-content: center;
 }
 
-
 .verde {
-    color: #0f491d !important;
-    font-weight: bold;
-    font-size: 0.95rem;
-    background-color: transparent !important;
+  color: #0f491d;
+  background-color: rgba(15, 73, 29, 0.1);
+  border: 1px solid rgba(15, 73, 29, 0.2);
 }
 
 .vermelho {
-    color: #dc3545 !important;
-    font-weight: 600;
-    font-size: 0.95rem;
-    background-color: transparent !important;
+  color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.1);
+  border: 1px solid rgba(220, 53, 69, 0.2);
 }
 
-.listar-visitantes button {
-    background-color: var(--marrom-escuro-10);
-    color: var(--neutro-claro-100);
-    width: 100%;
-    font-weight: bold;
-    font-size: 18px;
-    height: 50px;
-    border: none;
-    border-radius: 8px;
-    
-   
+.botoes-acoes {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
-.listar-visitantes button:hover {
-    background-color: var(--marrom-escuro-30);
-    cursor: pointer;
+.btn-editar,
+.btn-excluir {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  flex: 1;
+  min-width: 120px;
 }
 
+.btn-editar {
+  background-color: var(--marrom-escuro-10);
+  color: var(--neutro-claro-100);
+}
+
+.btn-editar:hover {
+  background-color: var(--marrom-escuro-30);
+  transform: translateY(-1px);
+}
+
+.btn-excluir {
+  background-color: #dc3545;
+  color: var(--neutro-claro-100);
+}
+
+.btn-excluir:hover {
+  background-color: #c82333;
+  transform: translateY(-1px);
+}
+
+.btn-voltar {
+  background-color: transparent !important;
+  color: var(--marrom-escuro-10) !important;
+  width: 100%;
+  font-weight: bold;
+  font-size: 18px;
+  height: 40px;
+  border: 1px solid var(--marrom-escuro-10) !important;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0;
+}
+
+.btn-voltar:hover {
+  background-color: var(--bronze-claro-80) !important;
+  cursor: pointer;
+}
+
+.erro {
+  color: #f44336;
+  text-align: center;
+  margin: 20px 0;
+}
 
 @media screen and (min-width: 768px) {
-    .listar-visitantes {
-        width: 600px;
-        max-width: 600px;
-        min-height: 630px;
-        padding: 10px 30px;
-        
-    }
+  .listar-visitantes {
+    width: 700px;
+    max-width: 600px;
+    min-height: 630px;
+    padding: 10px 30px;
+  }
 
-    .listar-visitantes h1 {
-        font-size: 2.5rem;
-        margin-bottom: 20px;
-        text-align: center;
-      
-    }
+  .listar-visitantes h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
 
-   
+@media screen and (max-width: 480px) {
+  .status-linhas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .status-linhas span {
+    width: 100%;
+  }
+
+  .botoes-acoes {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .btn-editar,
+  .btn-excluir {
+    width: 100%;
+  }
 }

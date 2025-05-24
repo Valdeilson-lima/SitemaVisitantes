@@ -6,6 +6,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
+import { 
+    FaUserPlus, 
+    FaUsers, 
+    FaUserFriends, 
+    FaBell, 
+    FaListAlt, 
+    FaUserCog, 
+    FaSignOutAlt 
+} from 'react-icons/fa';
 
 function MenuPrincipal() {
     const navigate = useNavigate();
@@ -47,47 +56,80 @@ function MenuPrincipal() {
 
             {(userData.tipo === 'Admin' || userData.tipo === 'Recepcao') && (
                 <div className='menu'>
-                    <Link to="/cadastroVisitante"><button>Cadastrar Visitante</button></Link>
+                    <Link to="/cadastro-visitante">
+                        <button>
+                            <FaUserPlus />
+                            Cadastrar Visitante
+                        </button>
+                    </Link>
                 </div>
             )}
 
             {(userData.tipo === 'Admin' || userData.tipo === 'Recepcao') && (
                 <div className='menu'>
-                    <Link to="/listarVisitantes"><button>Visualizar Visitantes</button></Link>
+                    <Link to="/listar-visitantes">
+                        <button>
+                            <FaUsers />
+                            Visualizar Visitantes
+                        </button>
+                    </Link>
                 </div>
             )}
 
             {(userData.tipo === 'Admin' || userData.tipo === 'Pastor') && (
                 <div className='menu'>
-                    <Link to="/apresentarVisitantes"><button>Apresentar Visitantes</button></Link>
+                    <Link to="/apresentar-visitante">
+                        <button>
+                            <FaUserFriends />
+                            Apresentar Visitantes
+                        </button>
+                    </Link>
                 </div>
             )}
 
             {(userData.tipo === 'Admin' || userData.tipo === 'Recepcao') && (
                 <div className='menu'>
-                    <Link to="/CadastrarAviso"><button>Cadastrar Avisos</button></Link>
+                    <Link to="/cadastrar-aviso">
+                        <button>
+                            <FaBell />
+                            Cadastrar Avisos
+                        </button>
+                    </Link>
                 </div>
             )}
 
             {(userData.tipo === 'Admin' || userData.tipo === 'Recepcao' || userData.tipo === 'Pastor') && (
                 <div className='menu'>
-                    <Link to="/ListarAvisos"><button>Visualizar Avisos</button></Link>
+                    <Link to="/listar-avisos">
+                        <button>
+                            <FaListAlt />
+                            Visualizar Avisos
+                        </button>
+                    </Link>
                 </div>
             )}
 
             {userData.tipo === 'Admin' && (
                 <div className='menu'>
-                    <Link to="/cadastrarUsuario"><button>Gerenciar Usuários</button></Link>
+                    <Link to="/cadastrarUsuario">
+                        <button>
+                            <FaUserCog />
+                            Gerenciar Usuários
+                        </button>
+                    </Link>
                 </div>
             )}
 
-            {userData.tipo === 'Admin' && (
+            {/* {userData.tipo === 'Admin' && (
                 <div className='menu'>
                     <Link to="/ListarLogs"><button>Logs de Usuários</button></Link>
                 </div>
-            )}
+            )} */}
 
-            <button className='logaout' onClick={handleLogout}>Sair</button>
+            <button className='logaout' onClick={handleLogout}>
+                <FaSignOutAlt />
+                Sair
+            </button>
         </div>
     );
 }

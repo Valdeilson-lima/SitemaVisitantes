@@ -1,77 +1,66 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import * as yup from 'yup';
-import { db, addDoc, collection, serverTimestamp, auth } from '../../../firebaseConfig';
-import { salvarLog, buscarNomeUsuario } from '../../services/loginServices';
-import './CadastroVisitante.css';
 import { toast } from 'react-toastify';
+import { auth } from '../../../firebaseConfig';
+import { salvarLog, buscarNomeUsuario } from '../../services/loginServices';
+import { cadastrarVisitante } from '../../services/visitanteServices';
+import { FaArrowLeft, FaUserPlus, FaSpinner } from 'react-icons/fa';
+import './CadastroVisitante.css';
 
+const formatarTelefone = (value) => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length <= 11) {
+        return numbers.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+    }
+    return value;
+};
 
-const schema = yup.object().shape({
-    nome_completo: yup.string().required('Nome é obrigatório'),
-    telefone: yup.string(),
-    cidade_estado: yup.string(),
-    denominacao: yup.string(),
-    observacao: yup.string(),
-    apresentado: yup.boolean(),
-    evangelico: yup.boolean(),
-    autoriza_imagem: yup.boolean(),
-});
+const INITIAL_FORM_STATE = {
+    nome_completo: '',
+    email: '',
+    telefone: '',
+    cidade_estado: '',
+    denominacao: '',
+    observacao: '',
+    evangelico: false,
+    autoriza_imagem: false,
+};
 
 function CadastroVisitante() {
     const [step, setStep] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
+    const [formData, setFormData] = useState(INITIAL_FORM_STATE);
     const navigate = useNavigate();
-
-    const [formData, setFormData] = useState({
-        nome_completo: '',
-        cpf: '',
-        email: '',
-        telefone: '',
-        cidade_estado: '',
-        denominacao: '',
-        observacao: '',
-        apresentado: false,
-        evangelico: false,
-        autoriza_imagem: false,
-    });
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setFormData((prev) => ({
+        
+        if (name === 'telefone') {
+            const formattedValue = formatarTelefone(value);
+            setFormData(prev => ({ ...prev, [name]: formattedValue }));
+            return;
+        }
+
+        setFormData(prev => ({
             ...prev,
             [name]: type === 'checkbox' ? checked : value,
         }));
     };
 
-
     const validateStepOne = async () => {
-        try {
-            await schema.validate({
-                nome_completo: formData.nome_completo,
-                cpf: formData.cpf,
-                email: formData.email,
-                telefone: formData.telefone,
-                cidade_estado: formData.cidade_estado,
-            }, { abortEarly: false });
-
-            return true;
-        } catch (err) {
-            if (err.inner) {
-                toast.error(
-                    <div>
-                        <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Preencha os campos obrigatórios:</strong>
-                        <ul style={{ marginTop: '5px', listStyleType: 'none', paddingLeft: 0, color: 'red', fontSize: '15px', fontWeight: 'bold' }}>
-                            {err.inner.map((e, i) => (
-                                <li key={i}>•  {e.message}</li>
-                            ))}
-                        </ul>
-                    </div>
-                );
-            }
+        if (!formData.nome_completo.trim()) {
+            toast.error(
+                <div>
+                    <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Campo Obrigatório:</strong>
+                    <p style={{ marginTop: '5px', color: 'red', fontSize: '15px', fontWeight: 'bold' }}>
+                        • O nome do visitante é obrigatório
+                    </p>
+                </div>
+            );
             return false;
         }
+        return true;
     };
-
 
     const handleNext = async () => {
         const isValid = await validateStepOne();
@@ -82,156 +71,174 @@ function CadastroVisitante() {
 
     const handleBack = () => setStep(1);
 
-    const cadastrarVisitante = async (dados) => {
-        try {
-            const visitantesRef = collection(db, 'visitantes');
-
-
-            await addDoc(visitantesRef, {
-                ...dados,
-                data_cadastro: serverTimestamp(),
-            });
-        } catch (error) {
-            console.error("Erro ao cadastrar visitante: ", error);
-            throw new Error("Erro ao cadastrar visitante");
-        }
-    };
-
     const handleSubmit = async () => {
+        setIsLoading(true);
         try {
             await cadastrarVisitante(formData);
-            toast.success('Visitante cadastrado com sucesso!');
-            navigate('/listarVisitantes');
+            toast.success(
+                <div>
+                    <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Sucesso!</strong>
+                    <p style={{ marginTop: '5px', fontSize: '15px' }}>
+                        Visitante cadastrado com sucesso!
+                    </p>
+                </div>
+            );
+            
             const nomeUsuario = await buscarNomeUsuario(auth.currentUser.uid);
             await salvarLog(
-                auth.currentUser.uid, nomeUsuario || 'Usuário sem nome',
+                auth.currentUser.uid,
+                nomeUsuario || 'Usuário sem nome',
                 'Realizou Cadastro de um Visitante.'
             );
 
+            setFormData(INITIAL_FORM_STATE);
+            navigate('/listar-visitantes');
         } catch (err) {
-            console.error(err);
-            toast.error('Erro ao cadastrar visitante.');
+            toast.error(
+                <div>
+                    <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Erro!</strong>
+                    <p style={{ marginTop: '5px', fontSize: '15px' }}>
+                        {err.message || 'Erro ao cadastrar visitante.'}
+                    </p>
+                </div>
+            );
+        } finally {
+            setIsLoading(false);
         }
     };
 
+    const renderStepOne = () => (
+        <div className="fade-in">
+            <div className="form-control">
+                <label htmlFor="nome_completo">Nome *</label>
+                <input
+                    type="text"
+                    id="nome_completo"
+                    name="nome_completo"
+                    placeholder='Digite o nome do visitante'
+                    value={formData.nome_completo}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div className="form-control">
+                <label htmlFor="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder='Ex: email@gmail.com'
+                    value={formData.email}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-control">
+                <label htmlFor="telefone">Telefone</label>
+                <input
+                    type="tel"
+                    id="telefone"
+                    name="telefone"
+                    placeholder='Ex: (83) 99999-9999'
+                    value={formData.telefone}
+                    onChange={handleChange}
+                    maxLength="15"
+                />
+            </div>
+            <div className="form-control">
+                <label htmlFor="cidade_estado">Localidade</label>
+                <input
+                    type="text"
+                    id="cidade_estado"
+                    name="cidade_estado"
+                    placeholder='Ex: Cajazeiras - PB'
+                    value={formData.cidade_estado}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-check">
+                <input
+                    type="checkbox"
+                    id="evangelico"
+                    name="evangelico"
+                    checked={formData.evangelico}
+                    onChange={handleChange}
+                />
+                <label htmlFor="evangelico">Evangélico?</label>
+            </div>
+            <div className="grid grid-2 gap-2">
+                <button type="button" onClick={handleNext} disabled={isLoading}>
+                    Avançar
+                </button>
+                <Link to="/menu">
+                    <button className="voltar" type="button">
+                        <FaArrowLeft /> Voltar
+                    </button>
+                </Link>
+            </div>
+        </div>
+    );
 
+    const renderStepTwo = () => (
+        <div className="fade-in">
+            <div className="form-control">
+                <label htmlFor="denominacao">Denominação</label>
+                <input
+                    type="text"
+                    id="denominacao"
+                    name="denominacao"
+                    placeholder='Ex: Assembleia de Deus'
+                    value={formData.denominacao}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-control">
+                <label htmlFor="observacao">Observação</label>
+                <textarea
+                    id="observacao"
+                    name="observacao"
+                    placeholder='Ex: Pedido de oração'
+                    value={formData.observacao}
+                    onChange={handleChange}
+                    rows="5"
+                />
+            </div>
+            <div className="grid grid-2 gap-2">
+                <button 
+                    type="button" 
+                    onClick={handleSubmit} 
+                    disabled={isLoading}
+                    className={isLoading ? 'loading-button' : ''}
+                >
+                    {isLoading ? (
+                        <>
+                            <FaSpinner className="spinner-icon" />
+                            Cadastrando...
+                        </>
+                    ) : 'Cadastrar'}
+                </button>
+                <button 
+                    className="voltar" 
+                    type="button" 
+                    onClick={handleBack} 
+                    disabled={isLoading}
+                >
+                    <FaArrowLeft /> Voltar
+                </button>
+            </div>
+        </div>
+    );
 
     return (
         <div className="cadastro-visitante">
-            <h1>Cadastro de Visitante</h1>
-
-            <form className="form" onSubmit={(e) => e.preventDefault()}>
-                {step === 1 && (
-                    <>
-                        <div className="form-control">
-                            <label htmlFor="nome_completo">Nome</label>
-                            <input
-                                type="text"
-                                id="nome_completo"
-                                name="nome_completo"
-                                placeholder='Digite o nome do visitante'
-                                value={formData.nome_completo}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder='Ex: email@gmail.com'
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label htmlFor="telefone">Telefone</label>
-                            <input
-                                type="tel"
-                                id="telefone"
-                                name="telefone"
-                                placeholder='Ex: (83) 99999-9999'
-                                value={formData.telefone}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label htmlFor="cidade_estado">Cidade / Estado</label>
-                            <input
-                                type="text"
-                                id="cidade_estado"
-                                name="cidade_estado"
-                                placeholder='Ex: Cajazeiras - PB'
-                                value={formData.cidade_estado}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-
-                        <div className="form-check">
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="evangelico"
-                                    checked={formData.evangelico}
-                                    onChange={handleChange}
-                                />
-                                Evangélico?
-                            </label>
-                        </div>
-
-                        <button type="button" onClick={handleNext}>Avançar</button>
-                        <Link to="/home"><button type="button" className="voltar">Voltar</button></Link>
-                    </>
-                )}
-
-                {step === 2 && (
-                    <>
-                        <div className="form-control">
-                            <label htmlFor="denominacao">Denominação</label>
-                            <input
-                                type="text"
-                                id="denominacao"
-                                name="denominacao"
-                                placeholder='Ex: Assembleia de Deus'
-                                value={formData.denominacao}
-                                onChange={handleChange}
-                            />
-                        </div>
-                        <div className="form-control">
-                            <label htmlFor="observacao">Observação</label>
-                            <textarea
-                                id="observacao"
-                                name="observacao"
-                                placeholder='Ex: Pedido de oração'
-                                value={formData.observacao}
-                                onChange={handleChange}
-                                rows="5"
-                            />
-                        </div>
-
-                        {/* <div className="form-control">
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    name="autoriza_imagem"
-                                    checked={formData.autoriza_imagem}
-                                    onChange={handleChange}
-                                />
-                                Autoriza uso de imagem nas transmissões?
-                            </label>
-                        </div> */}
-
-                        <div className="buttons">
-                            <button type="button" onClick={handleSubmit}>Enviar</button>
-                            <button className='voltar' type="button" onClick={handleBack}>Voltar</button>
-                        </div>
-                    </>
-                )}
+            <h1>
+                <FaUserPlus className="title-icon" /> Realize o Cadastro
+            </h1>
+            <div className="progress-bar">
+                <div className={`progress-step ${step === 1 ? 'active' : step > 1 ? 'completed' : ''}`}>1</div>
+                <div className={`progress-step ${step === 2 ? 'active' : ''}`}>2</div>
+            </div>
+            <form onSubmit={(e) => e.preventDefault()}>
+                {step === 1 ? renderStepOne() : renderStepTwo()}
             </form>
         </div>
     );

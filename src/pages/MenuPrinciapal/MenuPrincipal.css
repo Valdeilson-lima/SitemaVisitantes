@@ -1,90 +1,195 @@
 .menu-principal {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 10px;
-    margin-top: 10px;
-    min-width: 370px;
-    min-height: 580px;
-    border-radius: 8px;
-    background-color: var(--neutro-claro-10);
-    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  margin: 2rem auto;
+  min-width: 370px;
+  min-height: 580px;
+  border-radius: 16px;
+  background-color: var(--neutro-claro-10);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .menu-principal h1 {
-    font-size: 28px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: var(--marron-escuro-10);
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: var(--marron-escuro-10);
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.menu-principal h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background-color: var(--bege-10);
+  border-radius: 2px;
+}
+
+.menu-principal .menu {
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.menu-principal .menu:hover {
+  transform: translateX(5px);
 }
 
 .menu-principal .menu a {
-    text-decoration: none;
+  text-decoration: none;
+  display: block;
 }
 
 .menu-principal .menu a button {
-    background-color: var(--bege-10);
-    color: var(--neutro-claro-100);
-    width: 100%;
-    font-weight: bold;
-    font-size: 18px;
-    height: 50px;
-    border: none;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-    display: flex;
-    color: var(--neutro-claro-100);
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 10px 10px;
-    width: 100%;
-    margin-bottom: 30px;
-
+  background-color: var(--bege-10);
+  color: var(--neutro-claro-100);
+  width: 100%;
+  font-weight: 600;
+  font-size: 1.125rem;
+  height: 56px;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .menu-principal .menu a button:hover {
-    background-color: var(--bege-20);
-    cursor: pointer;
+  background-color: var(--bege-20);
+  cursor: pointer;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-.menu-principal button {
-    background-color: transparent;
-    color: var(--marrom-escuro-10);
-    width: 100%;
-    font-weight: bold;
-    font-size: 18px;
-    height: 50px;
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+.menu-principal .menu a button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.menu-principal button:hover {
-    background-color: var(--bronze-claro-80);
-    cursor: pointer;
+.menu-principal button.logaout {
+  background-color: transparent;
+  color: var(--marrom-escuro-10);
+  width: 100%;
+  font-weight: 600;
+  font-size: 1.125rem;
+  height: 56px;
+  border: 2px solid var(--marrom-escuro-10);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.menu-principal button.logaout:hover {
+  background-color: var(--bronze-claro-80);
+  cursor: pointer;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.menu-principal button.logaout:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .menu-principal p {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 500;
-    margin-top: 20px;
-    color: var(--marron-escuro-10);
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-top: 1.5rem;
+  color: var(--marron-escuro-10);
+  opacity: 0.8;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Tablet */
 @media screen and (min-width: 768px) {
-    .menu-principal {
-        width: 600px;
-        max-width: 630px;
-        min-height: 460px;
-        padding: 10px 30px;
+  .menu-principal {
+    width: 600px;
+    max-width: 630px;
+    min-height: 460px;
+    padding: 2.5rem;
+    margin-top: 3rem;
+  }
 
-    }
+  .menu-principal h1 {
+    font-size: 3rem;
+    margin-bottom: 2.5rem;
+  }
 
-    .menu-principal h1 {
-        font-size: 48px;
-    }
+  .menu-principal .menu a button {
+    font-size: 1.25rem;
+    height: 60px;
+  }
 
+  .menu-principal button.logaout {
+    font-size: 1.25rem;
+    height: 60px;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+  .menu-principal {
+    width: 700px;
+    max-width: 730px;
+    min-height: 500px;
+    padding: 3rem;
+  }
+
+  .menu-principal h1 {
+    font-size: 3.5rem;
+  }
+}
+
+/* Mobile pequeno */
+@media screen and (max-width: 360px) {
+  .menu-principal {
+    width: 95%;
+    padding: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .menu-principal h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .menu-principal .menu a button {
+    font-size: 1rem;
+    height: 48px;
+  }
+
+  .menu-principal button.logaout {
+    font-size: 1rem;
+    height: 48px;
+  }
 }
