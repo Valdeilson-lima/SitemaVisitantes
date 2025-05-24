@@ -24,7 +24,7 @@ function MenuPrincipal() {
         try {
             await signOut(auth);
             toast.success('Logout realizado com sucesso!');
-            navigate('/login');
+            navigate('/');
         } catch (error) {
             console.log(error);
             toast.error('Erro ao fazer logout!');
