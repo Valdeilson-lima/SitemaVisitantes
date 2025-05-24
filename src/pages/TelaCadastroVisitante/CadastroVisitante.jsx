@@ -169,10 +169,8 @@ function CadastroVisitante() {
                 <button type="button" onClick={handleNext} disabled={isLoading}>
                     Avançar
                 </button>
-                <Link to="/menu">
-                    <button className="voltar" type="button">
-                        <FaArrowLeft /> Voltar
-                    </button>
+                <Link to="/menu" className="voltar">
+                    <FaArrowLeft /> Voltar
                 </Link>
             </div>
         </div>
@@ -222,7 +220,7 @@ function CadastroVisitante() {
                     onClick={handleBack} 
                     disabled={isLoading}
                 >
-                    <FaArrowLeft /> Voltar
+                    <FaArrowLeft /> Voltar ao Menu
                 </button>
             </div>
         </div>

@@ -149,19 +149,27 @@
   transform: translateY(0);
 }
 
-.cadastro-visitante .voltar {
-  background-color: transparent;
-  color: var(--marrom-escuro-10);
-  border: 2px solid var(--marrom-escuro-10);
+.voltar {
+  background-color: transparent !important;
+  color: var(--marrom-escuro-10) !important;
+  width: 100%;
+  font-weight: bold;
+  font-size: 18px;
+  height: 40px;
+  border: 1px solid var(--marrom-escuro-10) !important;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
+  padding: 0;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.cadastro-visitante .voltar:hover {
-  background-color: var(--bronze-claro-80);
-  color: var(--marrom-escuro-10);
+.voltar:hover {
+  background-color: var(--bronze-claro-80) !important;
 }
 
 .voltar svg {
