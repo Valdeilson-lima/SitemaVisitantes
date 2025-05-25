@@ -1,5 +1,5 @@
 import './MenuPrincipal.css';
-import { signOut } from 'firebase/auth';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../../firebaseConfig';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,12 +13,16 @@ import {
     FaBell, 
     FaListAlt, 
     FaUserCog, 
-    FaSignOutAlt 
+    FaSignOutAlt,
+    FaHistory,
+    FaSpinner 
 } from 'react-icons/fa';
 
 function MenuPrincipal() {
     const navigate = useNavigate();
     const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     const handleLogout = async () => {
         try {
@@ -26,28 +30,98 @@ function MenuPrincipal() {
             toast.success('Logout realizado com sucesso!');
             navigate('/');
         } catch (error) {
-            console.log(error);
+            console.error('Erro ao fazer logout:', error);
             toast.error('Erro ao fazer logout!');
         }
     };
 
     useEffect(() => {
-        async function fetchUser() {
-            const user = auth.currentUser;
-            if (user) {
-                const docRef = doc(db, 'usuarios', user.uid);
-                const docSnap = await getDoc(docRef);
+        let timeoutId;
+        let unsubscribe;
+        
+        const fetchUserData = async (user) => {
+            try {
+                if (!user) {
+                    setError('Usuário não autenticado');
+                    setLoading(false);
+                    navigate('/');
+                    return;
+                }
+
+                // Adiciona timeout de 10 segundos
+                const timeoutPromise = new Promise((_, reject) => {
+                    timeoutId = setTimeout(() => {
+                        reject(new Error('Tempo limite excedido ao carregar dados do usuário'));
+                    }, 10000);
+                });
+
+                const fetchPromise = getDoc(doc(db, 'usuarios', user.uid));
+                const docSnap = await Promise.race([fetchPromise, timeoutPromise]);
+
                 if (docSnap.exists()) {
                     setUserData(docSnap.data());
+                } else {
+                    setError('Dados do usuário não encontrados');
                 }
+            } catch (error) {
+                console.error('Erro ao carregar dados do usuário:', error);
+                setError('Erro ao carregar dados do usuário');
+                toast.error('Erro ao carregar dados do usuário. Tente novamente.');
+            } finally {
+                setLoading(false);
             }
-        }
+        };
 
-        fetchUser();
-    }, []);
+        // Listener de autenticação
+        unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (user) {
+                fetchUserData(user);
+            } else {
+                setError('Usuário não autenticado');
+                setLoading(false);
+                navigate('/login');
+            }
+        });
+
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        };
+    }, [navigate]);
+
+    if (loading) {
+        return (
+            <div className="menu-principal loading">
+                <FaSpinner className="spinner" />
+                <p>Carregando menu...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="menu-principal error">
+                <p>{error}</p>
+                <button onClick={() => window.location.reload()}>
+                    Tentar Novamente
+                </button>
+            </div>
+        );
+    }
 
     if (!userData) {
-        return <p>Carregando menu...</p>;
+        return (
+            <div className="menu-principal error">
+                <p>Não foi possível carregar os dados do usuário</p>
+                <button onClick={() => window.location.reload()}>
+                    Tentar Novamente
+                </button>
+            </div>
+        );
     }
 
     return (
@@ -111,7 +185,7 @@ function MenuPrincipal() {
 
             {userData.tipo === 'Admin' && (
                 <div className='menu'>
-                    <Link to="/cadastrarUsuario">
+                    <Link to="/cadastrar-usuario">
                         <button>
                             <FaUserCog />
                             Gerenciar Usuários
@@ -120,11 +194,16 @@ function MenuPrincipal() {
                 </div>
             )}
 
-            {/* {userData.tipo === 'Admin' && (
+            {userData.tipo === 'Admin' && (
                 <div className='menu'>
-                    <Link to="/ListarLogs"><button>Logs de Usuários</button></Link>
+                    <Link to="/listar-logs">
+                        <button>
+                            <FaHistory />
+                            Logs de Usuários
+                        </button>
+                    </Link>
                 </div>
-            )} */}
+            )}
 
             <button className='logaout' onClick={handleLogout}>
                 <FaSignOutAlt />

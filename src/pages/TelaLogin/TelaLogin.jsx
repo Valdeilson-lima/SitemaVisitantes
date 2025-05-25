@@ -1,6 +1,6 @@
 import './TelaLogin.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../../../firebaseConfig'
 import { salvarLog, buscarNomeUsuario } from '../../services/loginServices';
@@ -13,6 +13,13 @@ function TelaLogin() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // Limpar estado de loading se o componente for desmontado
+  useEffect(() => {
+    return () => {
+      setLoading(false);
+    };
+  }, []);
 
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
@@ -47,21 +54,41 @@ function TelaLogin() {
 
     setLoading(true);
 
+    // Timeout para evitar carregamento infinito
+    const timeoutId = setTimeout(() => {
+      setLoading(false);
+      toast.error('Tempo limite excedido. Tente novamente.');
+    }, 10000); // 10 segundos
+
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      const nomeUsuario = await buscarNomeUsuario(user.uid);
-      await salvarLog(
-        auth.currentUser.uid, nomeUsuario || 'Usuário sem nome',
-        'Realizou login com sucesso.'
-      );
 
+      try {
+        const nomeUsuario = await buscarNomeUsuario(user.uid);
+        await salvarLog(
+          user.uid,
+          nomeUsuario || 'Usuário sem nome',
+          'Realizou login com sucesso.'
+        );
+      } catch (logError) {
+        console.error('Erro ao salvar log:', logError);
+        // Continua mesmo se falhar ao salvar o log
+      }
+
+      clearTimeout(timeoutId);
       toast.success('Login realizado com sucesso!');
       navigate('/menu');
     } catch (error) {
-      console.error(error);
+      console.error('Erro de autenticação:', error);
+      clearTimeout(timeoutId);
+      
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
         toast.error('Email ou senha incorretos!');
+      } else if (error.code === 'auth/too-many-requests') {
+        toast.error('Muitas tentativas. Tente novamente mais tarde.');
+      } else if (error.code === 'auth/network-request-failed') {
+        toast.error('Erro de conexão. Verifique sua internet.');
       } else {
         toast.error('Erro ao fazer login. Tente novamente.');
       }
@@ -84,6 +111,7 @@ function TelaLogin() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={errors.email ? 'error' : ''}
+            disabled={loading}
           />
           {errors.email && <span className="error-message">{errors.email}</span>}
         </div>
@@ -97,9 +125,9 @@ function TelaLogin() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={errors.password ? 'error' : ''}
+            disabled={loading}
           />
           {errors.password && <span className="error-message">{errors.password}</span>}
-          
         </div>
         <button type="submit" disabled={loading}>
           {loading ? (

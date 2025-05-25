@@ -11,6 +11,7 @@ import CadastrarAvisos from "./pages/TelaCadastroAvisos/CadastrarAviso";
 import ListarAvisos from "./pages/TelaListarAvisos/ListarAvisos";
 import CadastrarUsuario from "./pages/TelaCadastroUsuario/CadastroUsuario";
 import ListarLogs from "./pages/ListarLogs/logs";
+import ProtectedRoute from "./componentes/ProtectedRoute";
 
 import Layout from "./componentes/layout/index";
 
@@ -21,16 +22,86 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <TelaInicial /> },
       { path: "/login", element: <TelaLogin /> },
-      { path: "/menu", element: <MenuPrincipal /> },
-      { path: "/cadastro-visitante", element: <CadastroVisitante /> },
-      { path: "/listar-visitantes", element: <TelaListaVisitantes /> },
-      { path: "/apresentar-visitante", element: <ApresentarVisitantes /> },
-      { path: "/apresentar-visitante/:id", element: <ApresentarVisitantes /> },
-      { path: "/editar-visitante/:id", element: <EditarVisitante /> },
-      { path: "/cadastrar-aviso", element: <CadastrarAvisos /> },
-      { path: "/listar-avisos", element: <ListarAvisos /> },  
-      { path: "/cadastrar-usuario", element: <CadastrarUsuario /> },
-      { path: "/listar-logs", element: <ListarLogs /> },
+      { 
+        path: "/menu", 
+        element: (
+          <ProtectedRoute>
+            <MenuPrincipal />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
+        path: "/cadastro-visitante", 
+        element: (
+          <ProtectedRoute>
+            <CadastroVisitante />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
+        path: "/listar-visitantes", 
+        element: (
+          <ProtectedRoute>
+            <TelaListaVisitantes />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
+        path: "/apresentar-visitante", 
+        element: (
+          <ProtectedRoute>
+            <ApresentarVisitantes />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
+        path: "/apresentar-visitante/:id", 
+        element: (
+          <ProtectedRoute>
+            <ApresentarVisitantes />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
+        path: "/editar-visitante/:id", 
+        element: (
+          <ProtectedRoute>
+            <EditarVisitante />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
+        path: "/cadastrar-aviso", 
+        element: (
+          <ProtectedRoute>
+            <CadastrarAvisos />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
+        path: "/listar-avisos", 
+        element: (
+          <ProtectedRoute>
+            <ListarAvisos />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
+        path: "/cadastrar-usuario", 
+        element: (
+          <ProtectedRoute>
+            <CadastrarUsuario />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
+        path: "/listar-logs", 
+        element: (
+          <ProtectedRoute>
+            <ListarLogs />
+          </ProtectedRoute>
+        ) 
+      },
     ],
   },
 ]);

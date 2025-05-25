@@ -193,3 +193,52 @@
     height: 48px;
   }
 }
+
+/* Estados de Loading e Erro */
+.menu-principal.loading,
+.menu-principal.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.menu-principal.loading .spinner {
+  font-size: 3rem;
+  color: var(--marron-escuro-10);
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.menu-principal.error {
+  color: #dc3545;
+}
+
+.menu-principal.error button {
+  background-color: var(--marron-escuro-10);
+  color: var(--neutro-claro-100);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menu-principal.error button:hover {
+  background-color: var(--marron-escuro-20);
+  transform: translateY(-2px);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

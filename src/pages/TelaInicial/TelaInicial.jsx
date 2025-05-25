@@ -56,7 +56,7 @@ function TelaInicial() {
             </button>
 
             <footer className="tela-inicial-footer">
-                <p>Desenvolvido com ❤️ para nossa igreja</p>
+                <p>Sistema desenvolvido para fortalecer a comunhão em nossa igreja</p>
             </footer>
         </div>
     )

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { FaBell, FaArrowLeft, FaCheck } from 'react-icons/fa';
 
 import { db, auth } from '../../../firebaseConfig';
 import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
@@ -85,39 +86,44 @@ function ListarAvisos() {
 
     return (
         <div className="listar-avisos">
-            <h2>Avisos</h2>
+            <h1><FaBell className="title-icon" /> Avisos</h1>
 
-            {avisosDoDia.length === 0 ? (
-                <p>Nenhum aviso cadastrado para esse dia.</p>
-            ) : (
-                avisosDoDia.map((aviso) => (
-                    <div
-                        key={aviso.id}
-                        className={`aviso-card ${aviso.feito ? 'feito' : ''}`}
-                    >
-                        <h3>{aviso.titulo}</h3>
-                        <p>{aviso.descricao}</p>
-                        {/* <small className="data-aviso">
-                            Criado em: {formatarData(aviso.dataCriacao)}
-                        </small> */}
+            <ul className="lista-avisos">
+                {avisosDoDia.length === 0 ? (
+                    <p className="mensagem-vazia">Nenhum aviso cadastrado para esse dia.</p>
+                ) : (
+                    avisosDoDia.map((aviso) => (
+                        <li key={aviso.id} className="aviso-card">
+                            <h3>{aviso.titulo}</h3>
+                            <p>
+                                <strong>Descrição:</strong>
+                                <span>{aviso.descricao}</span>
+                            </p>
+                            <p>
+                                <strong>Data:</strong>
+                                <span>{formatarData(aviso.dataCriacao)}</span>
+                            </p>
 
-                        {!aviso.feito ? (
-                            <button
-                                onClick={() => marcarComoFeito(aviso.id)}
-                                className="botao-feito"
-                                aria-label="Marcar aviso como feito"
-                            >
-                                Marcar como feito
-                            </button>
-                        ) : (
-                            <span className="aviso-feito">✅ Aviso concluído</span>
-                        )}
-                    </div>
-                ))
-            )}
+                            {!aviso.feito ? (
+                                <button
+                                    onClick={() => marcarComoFeito(aviso.id)}
+                                    className="botao-feito"
+                                    aria-label="Marcar aviso como feito"
+                                >
+                                    <FaCheck /> Marcar como feito
+                                </button>
+                            ) : (
+                                <span className="aviso-feito">
+                                    <FaCheck /> Aviso concluído
+                                </span>
+                            )}
+                        </li>
+                    ))
+                )}
+            </ul>
 
-            <Link to="/home">
-                <button className="voltar">Voltar ao menu</button>
+            <Link to="/menu" className="btn-voltar">
+                <FaArrowLeft /> Voltar ao Menu
             </Link>
         </div>
     );

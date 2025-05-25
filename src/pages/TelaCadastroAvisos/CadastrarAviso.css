@@ -1,116 +1,202 @@
 .cadastrar-aviso {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 10px;
-    margin-top: 10px;
-    width: 370px;
-    min-height: 500px;
-    border-radius: 8px;
-    background-color: var(--neutro-claro-10);
-    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 20px auto;
+  width: 370px;
+  min-height: 500px;
+  border-radius: 12px;
+  background-color: var(--neutro-claro-10);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
 .cadastrar-aviso h2 {
-    font-size: 28px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: var(--marron-escuro-10);
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: var(--marron-escuro-10);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
-.cadastrar-aviso .form-group {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 20px;
-
+.title-icon {
+  font-size: 32px;
+  color: var(--marrom-escuro-10);
 }
 
-.cadastrar-aviso .form-group label {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: var(--marron-escuro-10);
+.cadastrar-aviso h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--marrom-escuro-10);
+  border-radius: 2px;
 }
 
-
-.cadastrar-aviso .form-group input {
-    padding: 12px;
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 4px;
-    font-size: 16px;
-    color: var(--marron-escuro-10);
-    outline: none;
+.cadastrar-aviso .form-control {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+  position: relative;
 }
 
-.cadastrar-aviso .form-group textarea {
-    outline: none;
-    padding: 10px;
-    width: 100%;
-    background-color: var(--neutro-claro-100);
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 4px;
-    font-size: 16px;
-
+.cadastrar-aviso .form-control label {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--marron-escuro-10);
+  display: flex;
+  align-items: center;
 }
 
+.cadastrar-aviso .form-control input,
+.cadastrar-aviso .form-control textarea {
+  padding: 12px;
+  border: 2px solid var(--marrom-escuro-10);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--marron-escuro-10);
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: var(--neutro-claro-100);
+}
 
+.cadastrar-aviso .form-control input:focus,
+.cadastrar-aviso .form-control textarea:focus {
+  border-color: var(--marrom-escuro-30);
+  box-shadow: 0 0 0 3px rgba(var(--marrom-escuro-10-rgb), 0.1);
+}
 
+.cadastrar-aviso .form-control input::placeholder,
+.cadastrar-aviso .form-control textarea::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+.cadastrar-aviso .form-control.error input,
+.cadastrar-aviso .form-control.error textarea {
+  border-color: #ff4444;
+}
+
+.error-message {
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
 
 .cadastrar-aviso button {
-    background-color: var(--marrom-escuro-10);
-    color: var(--neutro-claro-100);
-    width: 100%;
-    font-weight: bold;
-    font-size: 18px;
-    height: 45px;
-    border: none;
-    border-radius: 8px;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    transition: background-color 0.3s ease;
+  background-color: var(--marrom-escuro-10);
+  color: var(--neutro-claro-100);
+  font-weight: bold;
+  font-size: 16px;
+  height: 45px;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 20px;
+  cursor: pointer;
 }
 
-.cadastrar-aviso button:hover {
-    background-color: var(--marrom-escuro-30);
-    cursor: pointer;
+.cadastrar-aviso button:hover:not(:disabled) {
+  background-color: var(--marrom-escuro-30);
+  transform: translateY(-1px);
 }
 
-
-
-.cadastrar-aviso .voltar {
-    background-color: transparent;
-    color: var(--marrom-escuro-10);
-    width: 100%;
-    font-weight: bold;
-    font-size: 18px;
-    height: 45px;
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+.cadastrar-aviso button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
-.cadastrar-aviso .voltar:hover {
-    background-color: var(--bronze-claro-80);
-    cursor: pointer;
+.btn-limpar {
+  background-color: #666 !important;
+}
+
+.btn-limpar:hover:not(:disabled) {
+  background-color: #777 !important;
+}
+
+.voltar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--marrom-escuro-10);
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: color 0.3s ease;
+}
+
+.voltar:hover {
+  color: var(--marrom-escuro-30);
+}
+
+.loading-button {
+  opacity: 0.8;
+  cursor: wait !important;
+}
+
+.spinner-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media screen and (min-width: 768px) {
-    .cadastrar-aviso {
-        width: 600px;
-        max-width: 600px;
-        min-height: 500px;
-        padding: 10px 30px;
+  .cadastrar-aviso {
+    width: 600px;
+    max-width: 600px;
+    min-height: 500px;
+    padding: 10px 30px;
+  }
 
-    }
+  .cadastrar-aviso h1 {
+    font-size: 48px;
+  }
 
-    .cadastrar-aviso h1 {
-        font-size: 48px;
-    }
-
-    .cadastrar-aviso .form-control {
-        width: 100%;
-    }
-
-
+  .cadastrar-aviso .form-control {
+    width: 100%;
+  }
 }

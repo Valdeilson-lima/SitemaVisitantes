@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import './ListarVisitantes.css';
 import { Link } from 'react-router-dom';
-import { db } from '../../../firebaseConfig';
+import { db, auth } from '../../../firebaseConfig';
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { FaUsers, FaArrowLeft, FaEdit, FaTrash, FaUser, FaMapMarkerAlt, FaChurch, FaCalendarAlt, FaCommentAlt, FaCheck, FaTimes } from 'react-icons/fa';
+import { salvarLog, buscarNomeUsuario } from '../../services/loginServices';
 
 function ListarVisitantes() {
   const [visitantes, setVisitantes] = useState([]); 
   const [erro, setErro] = useState(null); 
 
-  const excluirVisitante = async (id) => {
+  const excluirVisitante = async (id, nomeVisitante) => {
     try {
       await deleteDoc(doc(db, 'visitantes', id));
       setVisitantes(visitantes.filter(visitante => visitante.id !== id));
+      
+      const nomeUsuario = await buscarNomeUsuario(auth.currentUser.uid);
+      await salvarLog(
+        auth.currentUser.uid,
+        nomeUsuario || 'Usuário sem nome',
+        `Excluiu o visitante ${nomeVisitante}.`
+      );
+
       toast.success(
         <div>
           <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Sucesso!</strong>
@@ -46,7 +55,7 @@ function ListarVisitantes() {
           <button
             onClick={() => {
               toast.dismiss();
-              excluirVisitante(id);
+              excluirVisitante(id, nome);
             }}
             style={{
               padding: '8px 16px',
@@ -93,6 +102,8 @@ function ListarVisitantes() {
           ...doc.data(), 
         }));
 
+        console.log('Visitantes carregados:', visitantesList);
+
         // Ordenar por não evangélicos primeiro e depois por nome
         const visitantesOrdenados = visitantesList.sort((a, b) => {
           if (a.evangelico === b.evangelico) {
@@ -112,23 +123,34 @@ function ListarVisitantes() {
     fetchVisitantes();
   }, []);
 
-  const dataHoje = new Date().toLocaleDateString('pt-BR');
+  const dataHoje = new Date();
+  dataHoje.setHours(0, 0, 0, 0);
+  console.log('Data de hoje:', dataHoje);
 
   const visitantesDoDia = visitantes.filter(v => {
-    if (!v.data_cadastro) return false; 
-    const dataVisita = new Date(v.data_cadastro.seconds * 1000).toLocaleDateString('pt-BR');
-    return dataVisita === dataHoje;
+    if (!v.data_cadastro) {
+      console.log('Visitante sem data:', v);
+      return false;
+    }
+    const dataVisita = new Date(v.data_cadastro.seconds * 1000);
+    dataVisita.setHours(0, 0, 0, 0);
+    console.log('Data do visitante:', dataVisita, 'Nome:', v.nome_completo);
+    const isSameDay = dataVisita.getTime() === dataHoje.getTime();
+    console.log('É do mesmo dia?', isSameDay);
+    return isSameDay;
   });
+
+  console.log('Visitantes do dia:', visitantesDoDia);
 
   return (
     <div className="listar-visitantes">
-      <h1><FaUsers /> Lista deVisitantes</h1>
+      <h1><FaUsers /> Lista de Visitantes</h1>
 
       {erro && <p className="erro">{erro}</p>} 
 
       <ul className="lista-visitantes">
         {visitantesDoDia.length === 0 ? (
-          <p>Não há visitantes cadastrados para esse dia.</p> 
+          <p className='mensagem-vazia'>Não há visitantes cadastrados para esse dia.</p> 
         ) : (
           visitantesDoDia.map((visitante) => (
             <li key={visitante.id} className="visitante-card">

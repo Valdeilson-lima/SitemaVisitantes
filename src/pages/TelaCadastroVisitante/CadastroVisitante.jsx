@@ -107,10 +107,29 @@ function CadastroVisitante() {
         }
     };
 
+    const handleLimparStep1 = () => {
+        setFormData(prev => ({
+            ...prev,
+            nome_completo: '',
+            email: '',
+            telefone: '',
+            cidade_estado: '',
+            evangelico: false
+        }));
+    };
+
+    const handleLimparStep2 = () => {
+        setFormData(prev => ({
+            ...prev,
+            denominacao: '',
+            observacao: ''
+        }));
+    };
+
     const renderStepOne = () => (
         <div className="fade-in">
             <div className="form-control">
-                <label htmlFor="nome_completo">Nome *</label>
+                <label htmlFor="nome_completo">Nome</label>
                 <input
                     type="text"
                     id="nome_completo"
@@ -165,14 +184,21 @@ function CadastroVisitante() {
                 />
                 <label htmlFor="evangelico">Evangélico?</label>
             </div>
-            <div className="grid grid-2 gap-2">
+            <div className="buttons-container">
+                <button 
+                    type="button" 
+                    onClick={handleLimparStep1}
+                    className="btn-limpar"
+                >
+                    Limpar
+                </button>
                 <button type="button" onClick={handleNext} disabled={isLoading}>
                     Avançar
                 </button>
-                <Link to="/menu" className="voltar">
-                    <FaArrowLeft /> Voltar
-                </Link>
             </div>
+            <Link to="/menu" className="voltar">
+                <FaArrowLeft /> Voltar ao Menu
+            </Link>
         </div>
     );
 
@@ -200,7 +226,15 @@ function CadastroVisitante() {
                     rows="5"
                 />
             </div>
-            <div className="grid grid-2 gap-2">
+            <div className="buttons-container">
+                <button 
+                    className="btn-limpar" 
+                    type="button" 
+                    onClick={handleLimparStep2}
+                    disabled={isLoading}
+                >
+                    Limpar
+                </button>
                 <button 
                     type="button" 
                     onClick={handleSubmit} 
@@ -214,15 +248,15 @@ function CadastroVisitante() {
                         </>
                     ) : 'Cadastrar'}
                 </button>
-                <button 
-                    className="voltar" 
-                    type="button" 
-                    onClick={handleBack} 
-                    disabled={isLoading}
-                >
-                    <FaArrowLeft /> Voltar ao Menu
-                </button>
             </div>
+            <button 
+                className="voltar" 
+                type="button" 
+                onClick={handleBack} 
+                disabled={isLoading}
+            >
+                <FaArrowLeft /> Voltar
+            </button>
         </div>
     );
 

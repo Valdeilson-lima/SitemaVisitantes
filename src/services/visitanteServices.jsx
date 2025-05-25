@@ -6,6 +6,7 @@ export async function cadastrarVisitante(visitanteData) {
         // Verificar se já existe um visitante com o mesmo nome e telefone no mesmo dia
         const hoje = new Date();
         hoje.setHours(0, 0, 0, 0);
+        console.log('Data de hoje no cadastro:', hoje);
         
         const visitantesRef = collection(db, "visitantes");
         const q = query(
@@ -22,6 +23,7 @@ export async function cadastrarVisitante(visitanteData) {
             if (data.data_cadastro) {
                 const dataCadastro = new Date(data.data_cadastro.seconds * 1000);
                 dataCadastro.setHours(0, 0, 0, 0);
+                console.log('Data do visitante existente:', dataCadastro);
                 return dataCadastro.getTime() === hoje.getTime();
             }
             return false;
@@ -38,6 +40,7 @@ export async function cadastrarVisitante(visitanteData) {
             apresentado: false
         });
 
+        console.log('Visitante cadastrado com sucesso:', docRef.id);
         return docRef.id;
     } catch (error) {
         console.error("Erro ao cadastrar visitante:", error);

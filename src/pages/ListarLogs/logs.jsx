@@ -22,33 +22,35 @@ function ListarLogs() {
     fetchLogs();
   }, []);
 
-  
   useEffect(() => {
     const logsDoDia = logs.filter(log => {
       const dataLog = log.data?.toDate();
       if (!dataLog) return false;
       const dataAtual = new Date();
-      return dataLog.getDate() === dataAtual.getDate() && dataLog.getMonth() === dataAtual.getMonth() && dataLog.getFullYear() === dataAtual.getFullYear();
+      return dataLog.getDate() === dataAtual.getDate() && 
+             dataLog.getMonth() === dataAtual.getMonth() && 
+             dataLog.getFullYear() === dataAtual.getFullYear();
     });
     setLogsDoDia(logsDoDia);
   }, [logs]);
 
   return (
     <div className='lista-logs'>
-      <h2>Logs de Atividades</h2>
-      <ul>
-        {logsDoDia.map(log => (
-          <li key={log.id}>
-            <p><strong>Usuario:</strong> {log.nomeUsuario}</p>
-            <p><strong>Ação:</strong> {log.acao}</p>
-            <p><strong>Data e hora: </strong>  {log.data?.toDate().toLocaleString()}</p>
-          </li>
-        ))}
-      </ul>
-
-      <Link to="/home">
-        <button className="btn-voltar">Voltar ao Menu</button>
-      </Link>
+      <h1>Logs de Atividades</h1>
+      {logsDoDia.length > 0 ? (
+        <ul>
+          {logsDoDia.map(log => (
+            <li key={log.id}>
+              <p><strong>Usuário:</strong> {log.nomeUsuario}</p>
+              <p><strong>Ação:</strong> {log.acao}</p>
+              <p><strong>Data e hora:</strong> {log.data?.toDate().toLocaleString()}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="sem-logs">Nenhum log registrado hoje.</p>
+      )}
+      <Link to="/menu" className="btn-voltar">Voltar ao Menu</Link>
     </div>
   );
 }
