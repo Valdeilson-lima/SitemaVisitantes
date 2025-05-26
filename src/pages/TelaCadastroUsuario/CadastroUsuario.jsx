@@ -248,6 +248,13 @@ function CadastroUsuario() {
 
                 <div className="buttons-container">
                     <button 
+                        type="button" 
+                        onClick={handleLimpar}
+                        className="btn-limpar"
+                    >
+                        Limpar
+                    </button>
+                    <button 
                         type="submit" 
                         disabled={isLoading}
                         className={isLoading ? 'loading-button' : ''}
@@ -258,13 +265,6 @@ function CadastroUsuario() {
                                 Cadastrando...
                             </>
                         ) : 'Cadastrar'}
-                    </button>
-                    <button 
-                        type="button" 
-                        onClick={handleLimpar}
-                        className="btn-limpar"
-                    >
-                        Limpar
                     </button>
                 </div>
                 <Link to="/menu">

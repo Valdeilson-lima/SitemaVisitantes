@@ -9,8 +9,10 @@ import ApresentarVisitantes from "./pages/TelaApresentarVisitantes/ApresentarVis
 import EditarVisitante from "./pages/TelaEditarVisitante/EditarVIsitante";
 import CadastrarAvisos from "./pages/TelaCadastroAvisos/CadastrarAviso";
 import ListarAvisos from "./pages/TelaListarAvisos/ListarAvisos";
+import EditarAviso from "./pages/TelaEditarAviso/EditarAviso";
 import CadastrarUsuario from "./pages/TelaCadastroUsuario/CadastroUsuario";
 import ListarLogs from "./pages/ListarLogs/logs";
+import NotFound from "./pages/NotFound/NotFound";
 import ProtectedRoute from "./componentes/ProtectedRoute";
 
 import Layout from "./componentes/layout/index";
@@ -87,6 +89,14 @@ const router = createBrowserRouter([
         ) 
       },
       { 
+        path: "/editar-aviso/:id", 
+        element: (
+          <ProtectedRoute>
+            <EditarAviso />
+          </ProtectedRoute>
+        ) 
+      },
+      { 
         path: "/cadastrar-usuario", 
         element: (
           <ProtectedRoute>
@@ -102,6 +112,7 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ) 
       },
+      { path: "*", element: <NotFound /> }
     ],
   },
 ]);

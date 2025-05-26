@@ -1,148 +1,268 @@
 .editar-visitante {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 10px;
-    margin-top: 10px;
-    width: 370px;
-    min-height: 590px;
-    border-radius: 8px;
-    background-color: var(--neutro-claro-10);
-    box-shadow: 1px 1px 2px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin: 20px auto;
+  width: 370px;
+  min-height: 645px;
+  border-radius: 12px;
+  background-color: var(--neutro-claro-10);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  max-width: 800px;
 }
 
-.editar-visitante h1 {
-    font-size: 28px;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: var(--marron-escuro-10);
+.editar-visitante h2 {
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: var(--marron-escuro-10);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
+.title-icon {
+  font-size: 32px;
+  color: var(--marrom-escuro-10);
+}
+
+.editar-visitante h2::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--marrom-escuro-10);
+  border-radius: 2px;
+}
 
 .editar-visitante .form-control {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 20px;
-
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .editar-visitante .form-control label {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: var(--marron-escuro-10);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--marron-escuro-10);
+  display: flex;
+  align-items: center;
 }
 
-
-.editar-visitante .form-check {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 20px;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: var(--marron-escuro-10);
+.editar-visitante .form-control label::after {
+  display: none;
 }
 
-
-
-.editar-visitante .form-control input {
-    padding: 12px;
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 4px;
-    font-size: 16px;
-    color: var(--marron-escuro-10);
-    outline: none;
+.editar-visitante .form-control label[for="nome_completo"]::after {
+  content: "*";
+  color: #ff4444;
+  margin-left: 4px;
+  display: inline-block;
 }
 
-.editar-visitante .form-control input:focus {
-    border-color: var(--marrom-escuro-30);
-}
-
+.editar-visitante .form-control input,
 .editar-visitante .form-control textarea {
-    outline: none;
-    padding: 10px;
-    width: 100%;
-    background-color: var(--neutro-claro-100);
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 4px;
-    font-size: 16px;
+  padding: 12px;
+  border: 2px solid var(--marrom-escuro-10);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--marron-escuro-10);
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: var(--neutro-claro-100);
+}
 
+.editar-visitante .form-control input:focus,
+.editar-visitante .form-control textarea:focus {
+  border-color: var(--marrom-escuro-30);
+  box-shadow: 0 0 0 3px rgba(var(--marrom-escuro-10-rgb), 0.1);
+}
+
+.editar-visitante .form-control input::placeholder,
+.editar-visitante .form-control textarea::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: var(--neutro-claro-100);
+  transition: all 0.3s ease;
+}
+
+.form-check:hover {
+  background-color: rgba(var(--marrom-escuro-10-rgb), 0.05);
 }
 
 .form-check input[type="checkbox"] {
-    display: inline-block;
-    margin: 0px 5px;
-    width: 15px;
-    height: 15px;
-    margin-top: 3px;
-    margin-right: 10px;
-    
-    
-   
-
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  cursor: pointer;
+  accent-color: var(--marrom-escuro-10);
 }
 
+.form-check label {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--marron-escuro-10);
+  cursor: pointer;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
 
 .editar-visitante button {
-    background-color: var(--marrom-escuro-10);
-    color: var(--neutro-claro-100);
-    width: 100%;
-    font-weight: bold;
-    font-size: 18px;
-    height: 45px;
-    border: none;
-    border-radius: 8px;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    transition: background-color 0.3s ease;
+  background-color: var(--marrom-escuro-10);
+  color: var(--neutro-claro-100);
+  font-weight: 600;
+  font-size: 16px;
+  height: 48px !important;
+  min-height: 48px;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex: 1;
+  padding: 0;
+  line-height: 1;
 }
 
-.editar-visitante button:hover {
-    background-color: var(--marrom-escuro-30);
-    cursor: pointer;
+.editar-visitante button:hover:not(:disabled) {
+  background-color: var(--marrom-escuro-30);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
-
-.editar-visitante .voltar {
-    background-color: transparent;
-    color: var(--marrom-escuro-10);
-    width: 100%;
-    font-weight: bold;
-    font-size: 18px;
-    height: 45px;
-    border: 1px solid var(--marrom-escuro-10);
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
+.editar-visitante button:active {
+  transform: translateY(0);
 }
 
-.editar-visitante .voltar:hover {
-    background-color: var(--bronze-claro-80);
-    cursor: pointer;
+.btn-limpar {
+  background-color: var(--neutro-claro-100) !important;
+  color: var(--marrom-escuro-10) !important;
+  border: 1px solid var(--marrom-escuro-10) !important;
 }
 
+.btn-limpar:hover:not(:disabled) {
+  background-color: var(--bronze-claro-80) !important;
+}
 
+.voltar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  text-decoration: none;
+  color: var(--marrom-escuro-10);
+  font-weight: 500;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: color 0.3s ease;
+}
+
+.voltar:hover {
+  color: var(--marrom-escuro-30);
+}
+
+.loading-button {
+  opacity: 0.8;
+  cursor: wait !important;
+}
+
+.spinner-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 @media screen and (min-width: 768px) {
-    .editar-visitante {
-        width: 600px;
-        max-width: 600px;
-        height: 630px;
-        padding: 10px 30px;
+  .editar-visitante {
+    width: 600px;
+    max-width: 600px;
+    padding: 30px;
+  }
 
-    }
+  .editar-visitante h2 {
+    font-size: 36px;
+  }
 
-    .editar-visitante h1 {
-        font-size: 48px;
-    }
+  .editar-visitante .form-control {
+    margin-bottom: 25px;
+  }
 
-    .editar-visitante .form-control {
-        width: 100%;
-    }
+  .editar-visitante .form-control label {
+    font-size: 18px;
+  }
 
+  .editar-visitante .form-control input,
+  .editar-visitante .form-control textarea {
+    padding: 14px;
+    font-size: 16px;
+  }
+}
 
+@media screen and (max-width: 480px) {
+  .editar-visitante button {
+    width: 100%;
+    font-size: 0.9rem;
+    height: 42px !important;
+    min-height: 42px;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .editar-visitante button {
+    font-size: 0.8125rem;
+    height: 40px !important;
+    min-height: 40px;
+    padding: 0;
+  }
 }

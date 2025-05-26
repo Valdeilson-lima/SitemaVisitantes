@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
 import { Link } from 'react-router-dom';
+import { FaHistory } from 'react-icons/fa';
 import './logs.css';
 
 function ListarLogs() {
@@ -36,7 +37,10 @@ function ListarLogs() {
 
   return (
     <div className='lista-logs'>
-      <h1>Logs de Atividades</h1>
+      <h1>
+        <FaHistory className="title-icon" />
+        Logs de Atividades
+      </h1>
       {logsDoDia.length > 0 ? (
         <ul>
           {logsDoDia.map(log => (

@@ -98,46 +98,56 @@ function ApresentarVisitantes() {
     };
 
     return (
-        <div className='apresentar-visitantes'>
-            <h1><FaUserFriends /> Apresentar Visitantes</h1>
-            {erro && <p className="erro">{erro}</p>}
+        <div className="listar-visitantes-container">
+            <div className="listar-visitantes">
+                <h1><FaUserFriends /> Apresentar Visitantes</h1>
+                {erro && <p className="erro">{erro}</p>}
 
-            {visitantesDoDia.length === 0 ? (
-                <p className="mensagem-vazia">Nenhum visitante cadastrado para hoje.</p>
-            ) : (
-                <ul className="lista-visitantes">
-                    {visitantesDoDia.map((visitante) => (
-                        <li key={visitante.id} className="visitante-card">
-                            <h3><FaUser /> {visitante.nome_completo}</h3>
-                            <p><strong><FaMapMarkerAlt /> Cidade:</strong> {visitante.cidade_estado || 'Não informado'}</p>
-                            <p><strong><FaChurch /> Denominação:</strong> {visitante.denominacao || 'Sem Denominação'}</p>
-                            <p><strong><FaCalendarAlt /> Data:</strong> {visitante.data_cadastro
-                                ? new Date(visitante.data_cadastro.seconds * 1000).toLocaleDateString('pt-BR')
-                                : 'Data inválida'}
-                            </p>
-                            <p><strong><FaCommentAlt /> Observação:</strong> {visitante.observacao || 'Sem observação'}</p>
+                {visitantesDoDia.length === 0 ? (
+                    <p className="mensagem-vazia">Nenhum visitante cadastrado para hoje.</p>
+                ) : (
+                    <ul className="lista-visitantes">
+                        {visitantesDoDia.map((visitante) => (
+                            <li key={visitante.id} className="visitante-card">
+                                <h3><FaUser /> {visitante.nome_completo}</h3>
+                                <div className="visitante-info">
+                                    <div className="info-item">
+                                        <strong><FaMapMarkerAlt /> Cidade</strong>
+                                        <p>{visitante.cidade_estado || 'Não informado'}</p>
+                                    </div>
+                                    <div className="info-item">
+                                        <strong><FaChurch /> Denominação</strong>
+                                        <p>{visitante.denominacao || 'Sem Denominação'}</p>
+                                    </div>
+                                    
+                                    <div className="info-item">
+                                        <strong><FaCommentAlt /> Observação</strong>
+                                        <p>{visitante.observacao || 'Sem observação'}</p>
+                                    </div>
+                                </div>
 
-                            <div className="status-linhas">
-                                <span className={visitante.evangelico ? "verde" : "vermelho"}>
-                                    {visitante.evangelico ? <><FaCheck /> Evangélico</> : <><FaTimes /> Não Evangélico</>}
-                                </span>
+                                <div className="status-linhas">
+                                    <span className={visitante.evangelico ? "verde" : "vermelho"}>
+                                        {visitante.evangelico ? <><FaCheck /> Evangélico</> : <><FaTimes /> Não Evangélico</>}
+                                    </span>
 
-                                <button
-                                    className={`botao-apresentado ${visitante.apresentado ? 'verde' : ''}`}
-                                    onClick={() => handleApresentar(visitante.id, visitante.nome_completo)}
-                                    disabled={visitante.apresentado}
-                                >
-                                    {visitante.apresentado ? <><FaCheck /> Apresentado</> : <><FaHandshake /> Apresentar</>}
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            )}
+                                    <button
+                                        className={`btn-editar ${visitante.apresentado ? 'verde' : ''}`}
+                                        onClick={() => handleApresentar(visitante.id, visitante.nome_completo)}
+                                        disabled={visitante.apresentado}
+                                    >
+                                        {visitante.apresentado ? <><FaCheck /> Apresentado</> : <><FaHandshake /> Apresentar</>}
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                )}
 
-            <Link to="/menu" className="btn-voltar">
-                <FaArrowLeft /> Voltar ao Menu
-            </Link>
+                <Link to="/menu" className="btn-voltar">
+                    <FaArrowLeft /> Voltar ao Menu
+                </Link>
+            </div>
         </div>
     );
 }

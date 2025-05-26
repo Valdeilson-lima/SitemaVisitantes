@@ -52,10 +52,18 @@ function CadastroVisitante() {
             toast.error(
                 <div>
                     <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Campo Obrigatório:</strong>
-                    <p style={{ marginTop: '5px', color: 'red', fontSize: '15px', fontWeight: 'bold' }}>
+                    <p style={{ marginTop: '5px', color: '#fff', fontSize: '15px', fontWeight: 'bold' }}>
                         • O nome do visitante é obrigatório
                     </p>
-                </div>
+                </div>,
+                {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                }
             );
             return false;
         }
@@ -74,6 +82,10 @@ function CadastroVisitante() {
     const handleSubmit = async () => {
         setIsLoading(true);
         try {
+            if (!formData.nome_completo.trim()) {
+                throw new Error("O nome do visitante é obrigatório");
+            }
+
             await cadastrarVisitante(formData);
             toast.success(
                 <div>
@@ -81,7 +93,15 @@ function CadastroVisitante() {
                     <p style={{ marginTop: '5px', fontSize: '15px' }}>
                         Visitante cadastrado com sucesso!
                     </p>
-                </div>
+                </div>,
+                {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                }
             );
             
             const nomeUsuario = await buscarNomeUsuario(auth.currentUser.uid);
@@ -94,13 +114,22 @@ function CadastroVisitante() {
             setFormData(INITIAL_FORM_STATE);
             navigate('/listar-visitantes');
         } catch (err) {
+            console.error("Erro ao cadastrar visitante:", err);
             toast.error(
                 <div>
                     <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Erro!</strong>
                     <p style={{ marginTop: '5px', fontSize: '15px' }}>
                         {err.message || 'Erro ao cadastrar visitante.'}
                     </p>
-                </div>
+                </div>,
+                {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                }
             );
         } finally {
             setIsLoading(false);

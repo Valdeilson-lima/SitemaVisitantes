@@ -8,20 +8,66 @@ import { FaUsers, FaArrowLeft, FaEdit, FaTrash, FaUser, FaMapMarkerAlt, FaChurch
 import { salvarLog, buscarNomeUsuario } from '../../services/loginServices';
 
 function ListarVisitantes() {
-  const [visitantes, setVisitantes] = useState([]); 
-  const [erro, setErro] = useState(null); 
+  const [visitantes, setVisitantes] = useState([]);
+  const [erro, setErro] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+
+  const formatarData = (timestamp) => {
+    if (!timestamp) return 'Data inválida';
+    return new Date(timestamp.seconds * 1000).toLocaleDateString('pt-BR');
+  };
+
+  const obterDataHoje = () => {
+    const data = new Date();
+    data.setHours(0, 0, 0, 0);
+    return data;
+  };
 
   const excluirVisitante = async (id, nomeVisitante) => {
+    if (!id || !nomeVisitante) {
+      console.error('ID ou nome do visitante não fornecidos');
+      toast.error('Erro: Dados do visitante incompletos');
+      return;
+    }
+
+    setIsLoading(true);
     try {
-      await deleteDoc(doc(db, 'visitantes', id));
-      setVisitantes(visitantes.filter(visitante => visitante.id !== id));
+      console.log('Iniciando exclusão do visitante:', { id, nomeVisitante });
       
+      // Verificar se o usuário está autenticado
+      if (!auth.currentUser) {
+        console.error('Usuário não autenticado');
+        throw new Error('Usuário não está autenticado');
+      }
+
+      console.log('Usuário autenticado:', auth.currentUser.uid);
+
+      // Verificar se o documento existe antes de tentar excluir
+      const visitanteRef = doc(db, 'visitantes', id);
+      console.log('Referência do documento criada:', visitanteRef.path);
+      
+      // Excluir o documento
+      await deleteDoc(visitanteRef);
+      console.log('Documento excluído com sucesso');
+
+      // Atualizar o estado local
+      setVisitantes(prevVisitantes => {
+        const novosVisitantes = prevVisitantes.filter(visitante => visitante.id !== id);
+        console.log('Estado local atualizado. Visitantes restantes:', novosVisitantes.length);
+        return novosVisitantes;
+      });
+      
+      // Registrar o log
       const nomeUsuario = await buscarNomeUsuario(auth.currentUser.uid);
+      console.log('Nome do usuário obtido:', nomeUsuario);
+      
       await salvarLog(
         auth.currentUser.uid,
         nomeUsuario || 'Usuário sem nome',
         `Excluiu o visitante ${nomeVisitante}.`
       );
+      console.log('Log salvo com sucesso');
 
       toast.success(
         <div>
@@ -32,52 +78,98 @@ function ListarVisitantes() {
         </div>
       );
     } catch (error) {
-      console.error('Erro ao excluir visitante:', error);
+      console.error('Erro detalhado ao excluir visitante:', error);
+      console.error('Stack trace:', error.stack);
+      
+      let mensagemErro = 'Não foi possível excluir o visitante.';
+      
+      if (error.message.includes('permission-denied')) {
+        mensagemErro = 'Você não tem permissão para excluir visitantes.';
+      } else if (error.message.includes('not-found')) {
+        mensagemErro = 'Visitante não encontrado.';
+      } else if (error.message.includes('não está autenticado')) {
+        mensagemErro = 'Você precisa estar logado para excluir visitantes.';
+      }
+
       toast.error(
         <div>
           <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Erro!</strong>
           <p style={{ marginTop: '5px', fontSize: '15px' }}>
-            Não foi possível excluir o visitante.
+            {mensagemErro}
           </p>
         </div>
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const confirmarExclusao = (id, nome) => {
-    toast.info(
-      <div>
-        <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Confirmar Exclusão</strong>
-        <p style={{ marginTop: '5px', fontSize: '15px' }}>
+    if (!id || !nome) {
+      console.error('ID ou nome do visitante não fornecidos na confirmação');
+      return;
+    }
+
+    const toastId = toast.info(
+      <div style={{ 
+        width: '100%',
+        padding: '10px',
+        textAlign: 'center'
+      }}>
+        <strong style={{ 
+          display: 'block',
+          fontSize: '18px',
+          marginBottom: '10px',
+          color: '#333'
+        }}>
+          Confirmar Exclusão
+        </strong>
+        <p style={{ 
+          fontSize: '16px',
+          marginBottom: '15px',
+          color: '#666'
+        }}>
           Deseja realmente excluir o visitante {nome}?
         </p>
-        <div style={{ marginTop: '10px', display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+        <div style={{ 
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '10px'
+        }}>
           <button
             onClick={() => {
-              toast.dismiss();
+              toast.dismiss(toastId);
               excluirVisitante(id, nome);
             }}
             style={{
-              padding: '8px 16px',
+              padding: '8px 20px',
               backgroundColor: '#dc3545',
               color: 'white',
               border: 'none',
               borderRadius: '4px',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              minWidth: '100px'
             }}
+            disabled={isLoading}
           >
-            Confirmar
+            {isLoading ? 'Excluindo...' : 'Confirmar'}
           </button>
           <button
-            onClick={() => toast.dismiss()}
+            onClick={() => toast.dismiss(toastId)}
             style={{
-              padding: '8px 16px',
+              padding: '8px 20px',
               backgroundColor: '#6c757d',
               color: 'white',
               border: 'none',
               borderRadius: '4px',
-              cursor: 'pointer'
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: 'bold',
+              minWidth: '100px'
             }}
+            disabled={isLoading}
           >
             Cancelar
           </button>
@@ -88,106 +180,129 @@ function ListarVisitantes() {
         autoClose: false,
         closeOnClick: false,
         draggable: false,
-        closeButton: false
+        closeButton: false,
+        style: {
+          width: '90%',
+          maxWidth: '400px',
+          margin: '0 auto',
+          backgroundColor: 'white',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          borderRadius: '8px'
+        },
+        bodyStyle: {
+          padding: '0'
+        }
       }
     );
   };
 
+  const carregarVisitantes = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'visitantes'));
+      const visitantesList = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      const visitantesOrdenados = visitantesList.sort((a, b) => {
+        if (a.evangelico === b.evangelico) {
+          return a.nome_completo.localeCompare(b.nome_completo);
+        }
+        return a.evangelico ? 1 : -1;
+      });
+
+      setVisitantes(visitantesOrdenados);
+    } catch (error) {
+      console.error('Erro ao carregar os visitantes:', error);
+      setErro('Não foi possível carregar os visitantes');
+      toast.error('Erro ao carregar os visitantes');
+    }
+  };
+
   useEffect(() => {
-    const fetchVisitantes = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(db, 'visitantes'));
-        const visitantesList = querySnapshot.docs.map(doc => ({
-          id: doc.id, 
-          ...doc.data(), 
-        }));
-
-        console.log('Visitantes carregados:', visitantesList);
-
-        // Ordenar por não evangélicos primeiro e depois por nome
-        const visitantesOrdenados = visitantesList.sort((a, b) => {
-          if (a.evangelico === b.evangelico) {
-            return a.nome_completo.localeCompare(b.nome_completo);
-          }
-          return a.evangelico ? 1 : -1;
-        });
-
-        setVisitantes(visitantesOrdenados);
-      } catch (error) {
-        console.error('Erro ao carregar os visitantes:', error);
-        setErro('Não foi possível carregar os visitantes'); 
-        toast.error('Erro ao carregar os visitantes'); 
-      }
-    };
-
-    fetchVisitantes();
+    carregarVisitantes();
   }, []);
 
-  const dataHoje = new Date();
-  dataHoje.setHours(0, 0, 0, 0);
-  console.log('Data de hoje:', dataHoje);
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setShowButton(scrollPosition > 100);
+    };
 
-  const visitantesDoDia = visitantes.filter(v => {
-    if (!v.data_cadastro) {
-      console.log('Visitante sem data:', v);
-      return false;
-    }
-    const dataVisita = new Date(v.data_cadastro.seconds * 1000);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const dataHoje = obterDataHoje();
+  const visitantesDoDia = visitantes.filter(visitante => {
+    if (!visitante.data_cadastro) return false;
+    
+    const dataVisita = new Date(visitante.data_cadastro.seconds * 1000);
     dataVisita.setHours(0, 0, 0, 0);
-    console.log('Data do visitante:', dataVisita, 'Nome:', v.nome_completo);
-    const isSameDay = dataVisita.getTime() === dataHoje.getTime();
-    console.log('É do mesmo dia?', isSameDay);
-    return isSameDay;
+    
+    return dataVisita.getTime() === dataHoje.getTime();
   });
 
-  console.log('Visitantes do dia:', visitantesDoDia);
+  const renderVisitanteCard = (visitante) => (
+    <li key={visitante.id} className="visitante-card">
+      <h3><FaUser /> {visitante.nome_completo}</h3>
+      <div className="visitante-info">
+        <div className="info-item">
+          <strong><FaMapMarkerAlt /> Cidade</strong>
+          <p>{visitante.cidade_estado || 'Não informado'}</p>
+        </div>
+        <div className="info-item">
+          <strong><FaChurch /> Denominação</strong>
+          <p>{visitante.denominacao || 'Sem Denominação'}</p>
+        </div>
+        <div className="info-item">
+          <strong><FaCommentAlt /> Observação</strong>
+          <p>{visitante.observacao || 'Sem observação'}</p>
+        </div>
+      </div>
+
+      <div className="status-linhas">
+        <span className={visitante.evangelico ? "verde" : "vermelho"}>
+          {visitante.evangelico ? <><FaCheck /> Evangélico</> : <><FaTimes /> Não Evangélico</>}
+        </span>
+
+        <div className="botoes-acoes">
+          <Link to={`/editar-visitante/${visitante.id}`} style={{ textDecoration: 'none' }}>
+            <button className="btn-editar" disabled={isLoading}>
+              <FaEdit /> Editar
+            </button>
+          </Link>
+          <button 
+            className="btn-excluir"
+            onClick={() => confirmarExclusao(visitante.id, visitante.nome_completo)}
+            disabled={isLoading}
+          >
+            <FaTrash /> {isLoading ? 'Excluindo...' : 'Excluir'}
+          </button>
+        </div>
+      </div>
+    </li>
+  );
 
   return (
-    <div className="listar-visitantes">
-      <h1><FaUsers /> Lista de Visitantes</h1>
+    <div className="listar-visitantes-container">
+      <div className="listar-visitantes">
+        <h1><FaUsers /> Lista de Visitantes</h1>
 
-      {erro && <p className="erro">{erro}</p>} 
+        {erro && <p className="erro">{erro}</p>}
 
-      <ul className="lista-visitantes">
-        {visitantesDoDia.length === 0 ? (
-          <p className='mensagem-vazia'>Não há visitantes cadastrados para esse dia.</p> 
-        ) : (
-          visitantesDoDia.map((visitante) => (
-            <li key={visitante.id} className="visitante-card">
-              <h3><FaUser /> {visitante.nome_completo}</h3>
-              <p><strong><FaMapMarkerAlt /> Cidade:</strong> {visitante.cidade_estado || 'Não informado'}</p>
-              <p><strong><FaChurch /> Denominação:</strong> {visitante.denominacao || 'Sem Denominação'}</p>
-              <p><strong><FaCalendarAlt /> Data:</strong> {visitante.data_cadastro ?
-                  new Date(visitante.data_cadastro.seconds * 1000).toLocaleDateString('pt-BR')
-                  : 'Data inválida'}
-              </p>
-              <p><strong><FaCommentAlt /> Observação:</strong> {visitante.observacao || 'Sem observação'}</p>
+        <ul className="lista-visitantes">
+          {visitantesDoDia.length === 0 ? (
+            <p className='mensagem-vazia'>Não há visitantes cadastrados para esse dia.</p>
+          ) : (
+            visitantesDoDia.map(renderVisitanteCard)
+          )}
+        </ul>
 
-              <div className="status-linhas">
-                <span className={visitante.evangelico ? "verde" : "vermelho"}>
-                  {visitante.evangelico ? <><FaCheck /> Evangélico</> : <><FaTimes /> Não Evangélico</>}
-                </span>
-
-                <div className="botoes-acoes">
-                  <Link to={`/editar-visitante/${visitante.id}`}>
-                    <button className="btn-editar"><FaEdit /> Editar</button>
-                  </Link>
-                  <button 
-                    className="btn-excluir"
-                    onClick={() => confirmarExclusao(visitante.id, visitante.nome_completo)}
-                  >
-                    <FaTrash /> Excluir
-                  </button>
-                </div>
-              </div>
-            </li>
-          ))
-        )}
-      </ul>
-
-      <Link to="/menu" className="btn-voltar">
-        <FaArrowLeft /> Voltar ao Menu
-      </Link>
+        <Link to="/menu" className={`btn-voltar ${showButton ? 'visible' : ''}`}>
+          <FaArrowLeft /> Voltar ao Menu
+        </Link>
+      </div>
     </div>
   );
 }
