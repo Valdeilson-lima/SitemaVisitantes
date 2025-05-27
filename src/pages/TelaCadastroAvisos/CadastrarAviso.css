@@ -1,166 +1,128 @@
-.cadastrar-aviso {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  margin: 20px auto;
-  width: 370px;
-  min-height: 500px;
-  border-radius: 12px;
-  background-color: var(--neutro-claro-10);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+.cadastrar-aviso-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--neutro-claro-100);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.cadastrar-aviso h2 {
-  font-size: 28px;
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 30px;
-  color: var(--marron-escuro-10);
-  position: relative;
+.cadastrar-aviso-container h2 {
+  color: var(--marrom-escuro-10);
+  margin-bottom: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 0.5rem;
+  font-size: 1.8rem;
+  text-align: center;
 }
 
-.title-icon {
-  font-size: 32px;
+.cadastrar-aviso-title-icon {
   color: var(--marrom-escuro-10);
 }
 
-.cadastrar-aviso h2::after {
-  content: "";
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background-color: var(--marrom-escuro-10);
-  border-radius: 2px;
-}
-
-.cadastrar-aviso .form-control {
+.cadastrar-aviso-form {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  margin-bottom: 20px;
-  position: relative;
+  gap: 1.5rem;
 }
 
-.cadastrar-aviso .form-control label {
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--marron-escuro-10);
+.cadastrar-aviso-form-control {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.cadastrar-aviso .form-control input,
-.cadastrar-aviso .form-control textarea {
-  padding: 12px;
-  border: 2px solid var(--marrom-escuro-10);
-  border-radius: 8px;
-  font-size: 16px;
-  color: var(--marron-escuro-10);
-  outline: none;
-  transition: all 0.3s ease;
+.cadastrar-aviso-form-control label {
+  font-weight: 600;
+  color: var(--marrom-escuro-10);
+}
+
+.cadastrar-aviso-form-control input,
+.cadastrar-aviso-form-control textarea {
+  padding: 0.8rem;
+  border: 1px solid var(--marrom-escuro-10);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
   background-color: var(--neutro-claro-100);
 }
 
-.cadastrar-aviso .form-control input:focus,
-.cadastrar-aviso .form-control textarea:focus {
+.cadastrar-aviso-form-control input:focus,
+.cadastrar-aviso-form-control textarea:focus {
+  outline: none;
   border-color: var(--marrom-escuro-30);
-  box-shadow: 0 0 0 3px rgba(var(--marrom-escuro-10-rgb), 0.1);
+  box-shadow: 0 0 0 2px rgba(var(--marrom-escuro-10-rgb), 0.1);
 }
 
-.cadastrar-aviso .form-control input::placeholder,
-.cadastrar-aviso .form-control textarea::placeholder {
-  color: #999;
-  font-size: 14px;
+.cadastrar-aviso-form-control.error input,
+.cadastrar-aviso-form-control.error textarea {
+  border-color: #f44336;
 }
 
-.cadastrar-aviso .form-control.error input,
-.cadastrar-aviso .form-control.error textarea {
-  border-color: #ff4444;
+.cadastrar-aviso-error-message {
+  color: #f44336;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
 }
 
-.error-message {
-  color: #ff4444;
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-.buttons-container {
+.cadastrar-aviso-buttons-container {
   display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-direction: column;
 }
 
-.cadastrar-aviso button {
+.cadastrar-aviso-button {
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cadastrar-aviso-button[type="submit"] {
   background-color: var(--marrom-escuro-10);
   color: var(--neutro-claro-100);
-  font-weight: bold;
-  font-size: 16px;
-  height: 45px;
-  border: none;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 0 20px;
-  cursor: pointer;
+  flex: 1;
 }
 
-.cadastrar-aviso button:hover:not(:disabled) {
+.cadastrar-aviso-button[type="submit"]:hover {
   background-color: var(--marrom-escuro-30);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.cadastrar-aviso button:disabled {
-  opacity: 0.7;
+.cadastrar-aviso-button[type="submit"]:disabled {
+  background-color: var(--neutro-claro-30);
   cursor: not-allowed;
 }
 
-.btn-limpar {
-  background-color: #666 !important;
+.cadastrar-aviso-btn-limpar {
+  background-color: var(--neutro-claro-100);
+  color: var(--marrom-escuro-10);
+  border: 1px solid var(--marrom-escuro-10);
 }
 
-.btn-limpar:hover:not(:disabled) {
-  background-color: #777 !important;
+.cadastrar-aviso-btn-limpar:hover {
+  background-color: var(--bronze-claro-80);
 }
 
-.voltar {
+.cadastrar-aviso-loading-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  text-decoration: none;
-  color: var(--marrom-escuro-10);
-  font-weight: 500;
-  font-size: 16px;
-  margin-top: 15px;
-  transition: color 0.3s ease;
+  gap: 0.5rem;
 }
 
-.voltar:hover {
-  color: var(--marrom-escuro-30);
+.cadastrar-aviso-spinner-icon {
+  animation: cadastrar-aviso-spin 1s linear infinite;
 }
 
-.loading-button {
-  opacity: 0.8;
-  cursor: wait !important;
-}
-
-.spinner-icon {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
+@keyframes cadastrar-aviso-spin {
   from {
     transform: rotate(0deg);
   }
@@ -169,34 +131,61 @@
   }
 }
 
-.fade-in {
-  animation: fadeIn 0.3s ease-in;
+.cadastrar-aviso-voltar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--marrom-escuro-10);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 0.8rem 1.5rem;
+  background-color: var(--neutro-claro-30);
+  border-radius: 4px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.cadastrar-aviso-voltar:hover {
+  color: var(--marrom-escuro-30);
+  background-color: var(--neutro-claro-50);
 }
 
-@media screen and (min-width: 768px) {
-  .cadastrar-aviso {
-    width: 600px;
-    max-width: 600px;
-    min-height: 500px;
-    padding: 10px 30px;
+.btn-voltar-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 2rem auto 0;
+  color: var(--marrom-escuro-10);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.8rem 1.5rem;
+  background-color: var(--neutro-claro-100);
+  border: 1px solid var(--marrom-escuro-10);
+  border-radius: 4px;
+  width: fit-content;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-voltar-menu:hover {
+  background-color: var(--bronze-claro-80);
+}
+
+@media (max-width: 768px) {
+  .cadastrar-aviso-container {
+    margin: 1rem;
+    padding: 1.5rem;
   }
 
-  .cadastrar-aviso h1 {
-    font-size: 48px;
+  .cadastrar-aviso-buttons-container {
+    flex-direction: column;
   }
 
-  .cadastrar-aviso .form-control {
+  .cadastrar-aviso-button {
     width: 100%;
   }
 }

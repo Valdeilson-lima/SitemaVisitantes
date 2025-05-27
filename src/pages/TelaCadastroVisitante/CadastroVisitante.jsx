@@ -48,7 +48,9 @@ function CadastroVisitante() {
     };
 
     const validateStepOne = async () => {
+        console.log('Validando etapa 1:', formData.nome_completo);
         if (!formData.nome_completo.trim()) {
+            console.log('Validação falhou: nome_completo está vazio');
             toast.error(
                 <div>
                     <strong style={{ fontWeight: 'bold', fontSize: '16px' }}>Campo Obrigatório:</strong>
@@ -71,8 +73,11 @@ function CadastroVisitante() {
     };
 
     const handleNext = async () => {
+        console.log('Tentando avançar para próxima etapa');
         const isValid = await validateStepOne();
+        console.log('Resultado da validação:', isValid);
         if (isValid) {
+            console.log('Avançando para etapa 2');
             setStep(2);
         }
     };
@@ -217,15 +222,26 @@ function CadastroVisitante() {
                 <button 
                     type="button" 
                     onClick={handleLimparStep1}
-                    className="btn-limpar"
+                    className="btn btn-secondary"
                 >
                     Limpar
                 </button>
-                <button type="button" onClick={handleNext} disabled={isLoading}>
+                <button type="button" onClick={handleNext} disabled={isLoading} className="btn btn-primary">
                     Avançar
                 </button>
             </div>
-            <Link to="/menu" className="voltar">
+            <Link 
+                to="/menu" 
+                className="btn" 
+                style={{ 
+                    color: 'var(--marrom-escuro-10)',
+                    background: 'var(--neutro-claro-30)',
+                    border: 'none',
+                    padding: '0.5rem',
+                    borderRadius: '4px',
+                    textDecoration: 'none'
+                }}
+            >
                 <FaArrowLeft /> Voltar ao Menu
             </Link>
         </div>
@@ -257,7 +273,7 @@ function CadastroVisitante() {
             </div>
             <div className="buttons-container">
                 <button 
-                    className="btn-limpar" 
+                    className="btn btn-secondary" 
                     type="button" 
                     onClick={handleLimparStep2}
                     disabled={isLoading}
@@ -268,7 +284,7 @@ function CadastroVisitante() {
                     type="button" 
                     onClick={handleSubmit} 
                     disabled={isLoading}
-                    className={isLoading ? 'loading-button' : ''}
+                    className={`btn btn-primary ${isLoading ? 'loading-button' : ''}`}
                 >
                     {isLoading ? (
                         <>
@@ -279,10 +295,17 @@ function CadastroVisitante() {
                 </button>
             </div>
             <button 
-                className="voltar" 
+                className="btn" 
                 type="button" 
                 onClick={handleBack} 
                 disabled={isLoading}
+                style={{ 
+                    color: 'var(--marrom-escuro-10)',
+                    background: 'var(--neutro-claro-30)',
+                    border: 'none',
+                    padding: '0.5rem',
+                    borderRadius: '4px'
+                }}
             >
                 <FaArrowLeft /> Voltar
             </button>

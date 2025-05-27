@@ -1,26 +1,77 @@
 .menu-principal {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
   padding: 2rem;
-  margin: 2rem auto;
-  min-width: 370px;
-  min-height: 580px;
-  border-radius: 16px;
-  background-color: var(--neutro-claro-10);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  animation: fadeIn 0.5s ease-in-out;
+  margin: 1.5rem auto;
+  width: 92%;
+  min-width: 320px;
+  min-height: 520px;
+  border-radius: 32px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98),
+    rgba(255, 255, 255, 0.95)
+  );
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 40px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  z-index: 10;
+}
+
+.menu-principal::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    transparent 50%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  animation: rotate 20s linear infinite;
+}
+
+.menu-principal::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.menu-principal:hover::before {
+  opacity: 1;
 }
 
 .menu-principal h1 {
-  font-size: 2.5rem;
+  font-size: 2.25rem;
   text-align: center;
   font-weight: 800;
-  margin-bottom: 2rem;
-  color: var(--marron-escuro-10);
+  margin-bottom: 2.5rem;
+  color: #5d4037;
   line-height: 1.2;
   letter-spacing: -0.5px;
   position: relative;
   padding-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 .menu-principal h1::after {
@@ -29,19 +80,27 @@
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  height: 3px;
-  background-color: var(--bege-10);
-  border-radius: 2px;
+  width: 60px;
+  height: 4px;
+  background: #8d6e63;
+  border-radius: 4px;
+  opacity: 1;
+  transition: width 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.menu-principal:hover h1::after {
+  width: 80px;
 }
 
 .menu-principal .menu {
   margin-bottom: 1rem;
-  transition: transform 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
 .menu-principal .menu:hover {
-  transform: translateX(5px);
+  transform: translateX(8px);
 }
 
 .menu-principal .menu a {
@@ -50,79 +109,118 @@
 }
 
 .menu-principal .menu a button {
-  background-color: var(--bege-10);
+  background: linear-gradient(135deg, var(--bege-10), var(--bege-20));
   color: var(--neutro-claro-100);
   width: 100%;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.125rem;
-  height: 56px;
+  height: 52px;
   border: none;
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 0.75rem;
-  padding: 0 1.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 0 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-principal .menu a button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
 }
 
 .menu-principal .menu a button:hover {
-  background-color: var(--bege-20);
+  background: linear-gradient(135deg, var(--bege-20), var(--bege-10));
   cursor: pointer;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
-.menu-principal .menu a button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.menu-principal .menu a button:hover::before {
+  left: 100%;
 }
 
 .menu-principal button.logaout {
-  background-color: transparent;
-  color: var(--marrom-escuro-10);
+  background: var(--marrom-escuro-10);
+  color: var(--neutro-claro-100);
   width: 100%;
   font-weight: 600;
   font-size: 1.125rem;
-  height: 56px;
-  border: 2px solid var(--marrom-escuro-10);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  margin-top: 2rem;
+  height: 52px;
+  border: none;
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-principal button.logaout::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
 }
 
 .menu-principal button.logaout:hover {
-  background-color: var(--bronze-claro-80);
+  background: var(--marrom-escuro-20);
   cursor: pointer;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
-.menu-principal button.logaout:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+.menu-principal button.logaout:hover::before {
+  left: 100%;
 }
 
 .menu-principal p {
   text-align: center;
-  font-size: 1.125rem;
-  font-weight: 500;
-  margin-top: 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  margin-top: 2rem;
   color: var(--marron-escuro-10);
-  opacity: 0.8;
+  opacity: 0.7;
+  letter-spacing: 0.2px;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -130,67 +228,98 @@
   }
 }
 
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Tablet */
 @media screen and (min-width: 768px) {
   .menu-principal {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
     width: 600px;
     max-width: 630px;
     min-height: 460px;
-    padding: 2.5rem;
+    padding: 3rem;
     margin-top: 3rem;
+    border-radius: 36px;
   }
 
   .menu-principal h1 {
-    font-size: 3rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .menu-principal .menu a button {
-    font-size: 1.25rem;
-    height: 60px;
+    grid-column: 1 / -1;
+    font-size: 2.75rem;
+    margin-bottom: 2rem;
   }
 
   .menu-principal button.logaout {
-    font-size: 1.25rem;
-    height: 60px;
+    grid-column: 1 / -1;
   }
 }
 
 /* Desktop */
 @media screen and (min-width: 1024px) {
   .menu-principal {
-    width: 700px;
-    max-width: 730px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    width: 900px;
+    max-width: 950px;
     min-height: 500px;
-    padding: 3rem;
+    padding: 4rem;
   }
 
   .menu-principal h1 {
+    grid-column: 1 / -1;
     font-size: 3.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .menu-principal button.logaout {
+    grid-column: 1 / -1;
   }
 }
 
 /* Mobile pequeno */
 @media screen and (max-width: 360px) {
   .menu-principal {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
     width: 95%;
     padding: 1.5rem;
     margin-top: 1rem;
+    border-radius: 24px;
+    min-height: 480px;
   }
 
   .menu-principal h1 {
     font-size: 2rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
   }
 
-  .menu-principal .menu a button {
-    font-size: 1rem;
+  .menu-principal h1::after {
+    width: 50px;
+    height: 3px;
+  }
+
+  .menu-principal:hover h1::after {
+    width: 65px;
+  }
+
+  .menu-principal .menu a button,
+  .menu-principal button.logaout {
     height: 48px;
+    font-size: 1rem;
+    border-radius: 14px;
+    padding: 0 1rem;
   }
 
   .menu-principal button.logaout {
-    font-size: 1rem;
-    height: 48px;
+    margin-top: 1.25rem;
   }
 }
 
@@ -207,10 +336,12 @@
 }
 
 .menu-principal.loading .spinner {
-  font-size: 3rem;
+  font-size: 2.5rem;
   color: var(--marron-escuro-10);
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
+  opacity: 0.8;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .menu-principal.error {
@@ -218,20 +349,27 @@
 }
 
 .menu-principal.error button {
-  background-color: var(--marron-escuro-10);
+  background: linear-gradient(
+    135deg,
+    var(--marron-escuro-10),
+    var(--marron-escuro-20)
+  );
   color: var(--neutro-claro-100);
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 16px;
+  font-weight: 500;
   margin-top: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .menu-principal.error button:hover {
-  background-color: var(--marron-escuro-20);
   transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
 @keyframes spin {

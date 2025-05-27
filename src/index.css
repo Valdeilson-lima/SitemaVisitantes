@@ -104,7 +104,6 @@
   --marrom-escuro-claro-90: #d9d5d4;
   --marrom-escuro-claro-95: #eceaea;
   --marrom-escuro-claro-100: #ffffff;
-
 }
 /* Reset e estilos base */
 * {
@@ -114,8 +113,36 @@
   font-family: "Roboto", sans-serif;
 }
 
-
 body {
-  background-color: var(--neutro-claro-10);
-  color: var(--marrom-escuro-10);
+  background: linear-gradient(
+    135deg,
+    var(--marrom-escuro-20) 0%,
+    var(--marrom-escuro-40) 50%,
+    var(--marrom-escuro-60) 100%
+  );
+  color: var(--bege-95);
+  line-height: 1.6;
+  font-weight: 300;
+  min-height: 100vh;
+}
+
+/* Adicionando estilos para melhorar a legibilidade */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--bege-100);
+  font-weight: 500;
+}
+
+a {
+  color: var(--bege-80);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--bege-100);
 }

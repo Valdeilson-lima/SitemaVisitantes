@@ -244,36 +244,36 @@ function ListarVisitantes() {
   });
 
   const renderVisitanteCard = (visitante) => (
-    <li key={visitante.id} className="visitante-card">
-      <h3><FaUser /> {visitante.nome_completo}</h3>
-      <div className="visitante-info">
-        <div className="info-item">
-          <strong><FaMapMarkerAlt /> Cidade</strong>
-          <p>{visitante.cidade_estado || 'Não informado'}</p>
+    <li key={visitante.id} className="lv-card">
+      <h3 className="lv-card__title"><FaUser /> {visitante.nome_completo}</h3>
+      <div className="lv-card__info">
+        <div className="lv-card__info-item">
+          <strong className="lv-card__info-label"><FaMapMarkerAlt /> Cidade</strong>
+          <p className="lv-card__info-value">{visitante.cidade_estado || 'Não informado'}</p>
         </div>
-        <div className="info-item">
-          <strong><FaChurch /> Denominação</strong>
-          <p>{visitante.denominacao || 'Sem Denominação'}</p>
+        <div className="lv-card__info-item">
+          <strong className="lv-card__info-label"><FaChurch /> Denominação</strong>
+          <p className="lv-card__info-value">{visitante.denominacao || 'Sem Denominação'}</p>
         </div>
-        <div className="info-item">
-          <strong><FaCommentAlt /> Observação</strong>
-          <p>{visitante.observacao || 'Sem observação'}</p>
+        <div className="lv-card__info-item">
+          <strong className="lv-card__info-label"><FaCommentAlt /> Observação</strong>
+          <p className="lv-card__info-value">{visitante.observacao || 'Sem observação'}</p>
         </div>
       </div>
 
-      <div className="status-linhas">
-        <span className={visitante.evangelico ? "verde" : "vermelho"}>
+      <div className="lv-card__status">
+        <span className={`lv-card__status-badge ${visitante.evangelico ? 'lv-card__status-badge--evangelico' : 'lv-card__status-badge--nao-evangelico'}`}>
           {visitante.evangelico ? <><FaCheck /> Evangélico</> : <><FaTimes /> Não Evangélico</>}
         </span>
 
-        <div className="botoes-acoes">
+        <div className="lv-card__actions">
           <Link to={`/editar-visitante/${visitante.id}`} style={{ textDecoration: 'none' }}>
-            <button className="btn-editar" disabled={isLoading}>
+            <button className="lv-card__button lv-card__button--edit" disabled={isLoading}>
               <FaEdit /> Editar
             </button>
           </Link>
           <button 
-            className="btn-excluir"
+            className="lv-card__button lv-card__button--delete"
             onClick={() => confirmarExclusao(visitante.id, visitante.nome_completo)}
             disabled={isLoading}
           >
@@ -285,21 +285,21 @@ function ListarVisitantes() {
   );
 
   return (
-    <div className="listar-visitantes-container">
-      <div className="listar-visitantes">
-        <h1><FaUsers /> Lista de Visitantes</h1>
+    <div className="lv-container">
+      <div className="lv-content">
+        <h1 className="lv-title"><FaUsers /> Lista de Visitantes</h1>
 
-        {erro && <p className="erro">{erro}</p>}
+        {erro && <p className="lv-error">{erro}</p>}
 
-        <ul className="lista-visitantes">
+        <ul className="lv-list">
           {visitantesDoDia.length === 0 ? (
-            <p className='mensagem-vazia'>Não há visitantes cadastrados para esse dia.</p>
+            <p className='lv-empty-message'>Não há visitantes cadastrados para esse dia.</p>
           ) : (
             visitantesDoDia.map(renderVisitanteCard)
           )}
         </ul>
 
-        <Link to="/menu" className={`btn-voltar ${showButton ? 'visible' : ''}`}>
+        <Link to="/menu" className={`lv-back-button ${showButton ? 'visible' : ''}`}>
           <FaArrowLeft /> Voltar ao Menu
         </Link>
       </div>

@@ -3,129 +3,125 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 2rem;
+  padding: 3rem;
   margin: 2rem auto;
-  width: 90%;
-  max-width: 800px;
+  width: 95%;
+  max-width: 1000px;
   min-height: 600px;
-  border-radius: 16px;
-  background-color: var(--neutro-claro-10);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: fadeIn 0.5s ease-in-out;
+  border-radius: 24px;
+  background-color: var(--neutro-claro-100);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
 }
 
 .logo-container {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .logo-icon {
-  font-size: 4rem;
-  color: var(--marron-escuro-10);
-  animation: float 3s ease-in-out infinite;
+  font-size: 3.5rem;
+  color: var(--marrom-escuro-10);
+  animation: float 4s ease-in-out infinite;
 }
 
 .tela-inicial h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-  color: var(--marron-escuro-10);
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: var(--marrom-escuro-10);
   line-height: 1.2;
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
 }
 
 .welcome-text {
-  font-size: 1.25rem;
-  margin-bottom: 2.5rem;
+  font-size: 1.125rem;
+  margin-bottom: 3rem;
   line-height: 1.6;
-  font-weight: 500;
-  color: var(--marron-escuro-10);
-  max-width: 90%;
+  font-weight: 400;
+  color: var(--marrom-escuro-10);
+  max-width: 85%;
+  opacity: 0.9;
 }
 
 .features-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   width: 100%;
   margin-bottom: 3rem;
 }
 
 .feature-item {
-  background-color: var(--neutro-claro-100);
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
+  background-color: var(--neutro-claro-10);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 1px solid var(--marrom-escuro-10);
 }
 
 .feature-item:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  background-color: var(--neutro-claro-20);
 }
 
 .feature-icon {
   font-size: 2rem;
-  color: var(--marron-escuro-10);
-  margin-bottom: 1rem;
+  color: var(--marrom-escuro-10);
+  margin-bottom: 1.25rem;
+  opacity: 0.9;
 }
 
 .feature-item h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--marron-escuro-10);
-  margin-bottom: 0.5rem;
+  color: var(--marrom-escuro-10);
+  margin-bottom: 0.75rem;
 }
 
 .feature-item p {
-  font-size: 1rem;
-  color: var(--marron-escuro-10);
-  opacity: 0.8;
+  font-size: 0.95rem;
+  color: var(--marrom-escuro-10);
+  opacity: 0.9;
+  line-height: 1.5;
 }
 
 .enter-button {
   background-color: var(--marrom-escuro-10);
   color: var(--neutro-claro-100);
   width: 100%;
-  max-width: 280px;
-  font-weight: 600;
+  max-width: 300px;
+  font-weight: 500;
   font-size: 1.125rem;
-  height: 56px;
+  height: 54px;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
 }
 
 .enter-button:hover {
   background-color: var(--marrom-escuro-30);
-  cursor: pointer;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .enter-button:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .tela-inicial-footer {
   margin-top: auto;
   padding-top: 2rem;
-  color: var(--marron-escuro-10);
+  color: var(--marrom-escuro-10);
   opacity: 0.8;
-  font-size: 0.9rem;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  font-size: 0.875rem;
+  font-weight: 400;
 }
 
 @keyframes float {
@@ -143,107 +139,45 @@
 /* Tablet */
 @media screen and (min-width: 768px) {
   .tela-inicial {
-    max-width: 800px;
-    min-height: 650px;
-    padding: 3rem;
-    margin-top: 3rem;
+    padding: 3.5rem;
   }
 
   .tela-inicial h1 {
     font-size: 3rem;
-    margin-bottom: 2rem;
   }
 
   .welcome-text {
-    font-size: 1.375rem;
-    margin-bottom: 3rem;
-    max-width: 80%;
-  }
-
-  .features-container {
-    gap: 2.5rem;
-  }
-
-  .feature-item {
-    padding: 2rem;
-  }
-
-  .feature-icon {
-    font-size: 2.5rem;
-  }
-
-  .feature-item h3 {
-    font-size: 1.5rem;
-  }
-
-  .feature-item p {
-    font-size: 1.125rem;
-  }
-
-  .enter-button {
     font-size: 1.25rem;
-    height: 60px;
-    max-width: 320px;
   }
 }
 
 /* Desktop */
 @media screen and (min-width: 1024px) {
   .tela-inicial {
-    max-width: 1000px;
-    min-height: 700px;
     padding: 4rem;
   }
 
   .tela-inicial h1 {
-    font-size: 3.5rem;
-  }
-
-  .welcome-text {
-    font-size: 1.5rem;
+    font-size: 3.25rem;
   }
 }
 
 /* Mobile pequeno */
 @media screen and (max-width: 360px) {
   .tela-inicial {
-    width: 95%;
     padding: 1.5rem;
     margin-top: 1rem;
   }
 
   .tela-inicial h1 {
     font-size: 2rem;
-    margin-bottom: 1rem;
   }
 
   .welcome-text {
-    font-size: 1.125rem;
-    margin-bottom: 2rem;
-  }
-
-  .features-container {
-    gap: 1rem;
+    font-size: 1rem;
   }
 
   .feature-item {
-    padding: 1rem;
-  }
-
-  .feature-icon {
-    font-size: 1.75rem;
-  }
-
-  .feature-item h3 {
-    font-size: 1.125rem;
-  }
-
-  .feature-item p {
-    font-size: 0.9rem;
-  }
-
-  .enter-button {
-    height: 48px;
-    font-size: 1rem;
+    padding: 1.5rem;
   }
 }

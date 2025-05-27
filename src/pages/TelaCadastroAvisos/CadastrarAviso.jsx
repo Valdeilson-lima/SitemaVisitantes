@@ -71,12 +71,12 @@ function CadastrarAvisos() {
   };
 
   return (
-    <div className="cadastrar-aviso">
+    <div className="cadastrar-aviso-container">
       <h2>
-        <FaBell className="title-icon" /> Cadastrar Aviso
+        <FaBell className="cadastrar-aviso-title-icon" /> Cadastrar Aviso
       </h2>
-      <form className="form" onSubmit={handleSubmit}>
-        <div className={`form-control ${errors.titulo ? 'error' : ''}`}>
+      <form className="cadastrar-aviso-form" onSubmit={handleSubmit}>
+        <div className={`cadastrar-aviso-form-control ${errors.titulo ? 'error' : ''}`}>
           <label htmlFor="titulo">Título</label>
           <input
             type="text"
@@ -86,10 +86,10 @@ function CadastrarAvisos() {
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
           />
-          {errors.titulo && <span className="error-message">{errors.titulo}</span>}
+          {errors.titulo && <span className="cadastrar-aviso-error-message">{errors.titulo}</span>}
         </div>
 
-        <div className={`form-control ${errors.descricao ? 'error' : ''}`}>
+        <div className={`cadastrar-aviso-form-control ${errors.descricao ? 'error' : ''}`}>
           <label htmlFor="descricao">Descrição</label>
           <textarea
             id="descricao"
@@ -99,32 +99,32 @@ function CadastrarAvisos() {
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}
           />
-          {errors.descricao && <span className="error-message">{errors.descricao}</span>}
+          {errors.descricao && <span className="cadastrar-aviso-error-message">{errors.descricao}</span>}
         </div>
 
-        <div className="buttons-container">
+        <div className="cadastrar-aviso-buttons-container">
           <button 
             type="button" 
             onClick={handleLimpar}
-            className="btn-limpar"
+            className="cadastrar-aviso-button cadastrar-aviso-btn-limpar"
           >
             Limpar
           </button>
           <button 
             type="submit" 
             disabled={isLoading}
-            className={isLoading ? 'loading-button' : ''}
+            className={`cadastrar-aviso-button ${isLoading ? 'cadastrar-aviso-loading-button' : ''}`}
           >
             {isLoading ? (
               <>
-                <FaSpinner className="spinner-icon" />
+                <FaSpinner className="cadastrar-aviso-spinner-icon" />
                 Cadastrando...
               </>
             ) : 'Cadastrar'}
           </button>
         </div>
 
-        <Link to="/menu" className="voltar">
+        <Link to="/menu" className="cadastrar-aviso-voltar">
           <FaArrowLeft /> Voltar ao Menu
         </Link>
       </form>
