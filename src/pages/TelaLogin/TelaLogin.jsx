@@ -1,88 +1,59 @@
-import './TelaLogin.css'
-import { Link, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import { signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../../firebaseConfig'
+import './TelaLogin.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../../firebaseConfig';
 import { salvarLog, buscarNomeUsuario } from '../../services/loginServices';
-import { toast } from 'react-toastify'
-import { FaSpinner } from 'react-icons/fa'
+import { toast } from 'react-toastify';
+import { FaSpinner } from 'react-icons/fa';
 
 function TelaLogin() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
-  // Limpar estado de loading se o componente for desmontado
-  useEffect(() => {
-    return () => {
-      setLoading(false);
-    };
-  }, []);
+  useEffect(() => () => setLoading(false), []);
 
-  const validateEmail = (email) => {
-    const re = /\S+@\S+\.\S+/;
-    return re.test(email);
-  }
+  const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors = {};
-    
-    if (!email) {
-      newErrors.email = 'Email é obrigatório';
-    } else if (!validateEmail(email)) {
-      newErrors.email = 'Email inválido';
-    }
-    
-    if (!password) {
-      newErrors.password = 'Senha é obrigatória';
-    } else if (password.length < 6) {
-      newErrors.password = 'Senha deve ter pelo menos 6 caracteres';
-    }
-
+    if (!form.email) newErrors.email = 'Email é obrigatório';
+    else if (!validateEmail(form.email)) newErrors.email = 'Email inválido';
+    if (!form.password) newErrors.password = 'Senha é obrigatória';
+    else if (form.password.length < 6) newErrors.password = 'Senha deve ter pelo menos 6 caracteres';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  }
+  }, [form]);
 
-  async function handleLogin(event) {
+  const handleChange = (e) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setErrors((prev) => ({ ...prev, [e.target.name]: undefined }));
+  };
+
+  const handleLogin = async (event) => {
     event.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-
+    if (!validateForm()) return;
     setLoading(true);
-
-    // Timeout para evitar carregamento infinito
     const timeoutId = setTimeout(() => {
       setLoading(false);
       toast.error('Tempo limite excedido. Tente novamente.');
-    }, 10000); // 10 segundos
-
+    }, 10000);
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-
+      const { user } = await signInWithEmailAndPassword(auth, form.email, form.password);
       try {
         const nomeUsuario = await buscarNomeUsuario(user.uid);
-        await salvarLog(
-          user.uid,
-          nomeUsuario || 'Usuário sem nome',
-          'Realizou login com sucesso.'
-        );
+        await salvarLog(user.uid, nomeUsuario || 'Usuário sem nome', 'Realizou login com sucesso.');
       } catch (logError) {
         console.error('Erro ao salvar log:', logError);
-        // Continua mesmo se falhar ao salvar o log
       }
-
       clearTimeout(timeoutId);
       toast.success('Login realizado com sucesso!');
       navigate('/menu');
     } catch (error) {
       console.error('Erro de autenticação:', error);
       clearTimeout(timeoutId);
-      
       if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
         toast.error('Email ou senha incorretos!');
       } else if (error.code === 'auth/too-many-requests') {
@@ -95,52 +66,51 @@ function TelaLogin() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className='tela-login'>
-      <h1>Login</h1>
-      <form className='form' onSubmit={handleLogin}>
-        <div className='form-control'>
-          <label htmlFor="email">Email</label>
-          <input 
-            type="email" 
-            name="email" 
-            id="email" 
+    <div className="tela-login-page">
+      <h1 className="tela-login-title">Login</h1>
+      <form className="tela-login-form" onSubmit={handleLogin} autoComplete="on">
+        <div className="tela-login-form-control">
+          <label htmlFor="email" className="tela-login-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
             placeholder="Digite seu email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={errors.email ? 'error' : ''}
+            value={form.email}
+            onChange={handleChange}
+            className={`tela-login-input${errors.email ? ' tela-login-input-error' : ''}`}
             disabled={loading}
+            autoComplete="username"
           />
-          {errors.email && <span className="error-message">{errors.email}</span>}
+          {errors.email ? (<span className="tela-login-error-message">{errors.email}</span>) : null}
         </div>
-        <div className='form-control'>
-          <label htmlFor="senha">Senha</label>
-          <input 
-            type="password" 
-            name="senha" 
-            id="senha" 
+        <div className="tela-login-form-control">
+          <label htmlFor="password" className="tela-login-label">Senha</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
             placeholder="Digite sua senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={errors.password ? 'error' : ''}
+            value={form.password}
+            onChange={handleChange}
+            className={`tela-login-input${errors.password ? ' tela-login-input-error' : ''}`}
             disabled={loading}
+            autoComplete="current-password"
           />
-          {errors.password && <span className="error-message">{errors.password}</span>}
+          {errors.password ? (<span className="tela-login-error-message">{errors.password}</span>) : null}
         </div>
-        <button type="submit" disabled={loading}>
-          {loading ? (
-            <>
-              <FaSpinner className="spinner" /> Carregando...
-            </>
-          ) : (
-            'Acessar'
-          )}
+        <button type="submit" className="tela-login-btn" disabled={loading} aria-busy={loading} aria-label="Entrar">
+          {loading ? (<><FaSpinner className="tela-login-spinner" /> Carregando...</>) : 'Acessar'}
         </button>
       </form>
+      <p className="tela-login-link-text">
+        Esqueceu a senha? <Link to="#" tabIndex={loading ? -1 : 0} className="tela-login-link">Recuperar</Link>
+      </p>
     </div>
-  )
+  );
 }
 
-export default TelaLogin
+export default TelaLogin;

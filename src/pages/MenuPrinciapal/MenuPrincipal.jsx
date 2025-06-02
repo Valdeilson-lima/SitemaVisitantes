@@ -3,42 +3,30 @@ import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../../firebaseConfig';
 import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../../../firebaseConfig';
-import { 
-    FaUserPlus, 
-    FaUsers, 
-    FaUserFriends, 
-    FaBell, 
-    FaListAlt, 
-    FaUserCog, 
+import {
+    FaUserPlus,
+    FaUsers,
+    FaUserFriends,
+    FaBell,
+    FaListAlt,
+    FaUserCog,
     FaSignOutAlt,
     FaHistory,
-    FaSpinner 
+    FaSpinner
 } from 'react-icons/fa';
 
-function MenuPrincipal() {
-    const navigate = useNavigate();
+// Hook personalizado para autenticação e dados do usuário
+function useAuthUser(navigate) {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const handleLogout = async () => {
-        try {
-            await signOut(auth);
-            toast.success('Logout realizado com sucesso!');
-            navigate('/');
-        } catch (error) {
-            console.error('Erro ao fazer logout:', error);
-            toast.error('Erro ao fazer logout!');
-        }
-    };
-
     useEffect(() => {
         let timeoutId;
         let unsubscribe;
-        
         const fetchUserData = async (user) => {
             try {
                 if (!user) {
@@ -47,32 +35,25 @@ function MenuPrincipal() {
                     navigate('/');
                     return;
                 }
-
-                // Adiciona timeout de 10 segundos
                 const timeoutPromise = new Promise((_, reject) => {
                     timeoutId = setTimeout(() => {
                         reject(new Error('Tempo limite excedido ao carregar dados do usuário'));
                     }, 10000);
                 });
-
                 const fetchPromise = getDoc(doc(db, 'usuarios', user.uid));
                 const docSnap = await Promise.race([fetchPromise, timeoutPromise]);
-
                 if (docSnap.exists()) {
                     setUserData(docSnap.data());
                 } else {
                     setError('Dados do usuário não encontrados');
                 }
             } catch (error) {
-                console.error('Erro ao carregar dados do usuário:', error);
                 setError('Erro ao carregar dados do usuário');
                 toast.error('Erro ao carregar dados do usuário. Tente novamente.');
             } finally {
                 setLoading(false);
             }
         };
-
-        // Listener de autenticação
         unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
                 fetchUserData(user);
@@ -82,15 +63,71 @@ function MenuPrincipal() {
                 navigate('/login');
             }
         });
-
         return () => {
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-            }
-            if (unsubscribe) {
-                unsubscribe();
-            }
+            if (timeoutId) clearTimeout(timeoutId);
+            if (unsubscribe) unsubscribe();
         };
+    }, [navigate]);
+    return { userData, loading, error };
+}
+
+const MENU_ITEMS = [
+    {
+        label: 'Cadastrar Visitante',
+        to: '/cadastro-visitante',
+        icon: FaUserPlus,
+        roles: ['Admin', 'Recepcao']
+    },
+    {
+        label: 'Visualizar Visitantes',
+        to: '/listar-visitantes',
+        icon: FaUsers,
+        roles: ['Admin', 'Recepcao']
+    },
+    {
+        label: 'Apresentar Visitantes',
+        to: '/apresentar-visitante',
+        icon: FaUserFriends,
+        roles: ['Admin', 'Pastor']
+    },
+    {
+        label: 'Cadastrar Avisos',
+        to: '/cadastrar-aviso',
+        icon: FaBell,
+        roles: ['Admin', 'Recepcao']
+    },
+    {
+        label: 'Visualizar Avisos',
+        to: '/listar-avisos',
+        icon: FaListAlt,
+        roles: ['Admin', 'Recepcao', 'Pastor']
+    },
+    {
+        label: 'Gerenciar Usuários',
+        to: '/cadastrar-usuario',
+        icon: FaUserCog,
+        roles: ['Admin']
+    },
+    {
+        label: 'Logs de Usuários',
+        to: '/listar-logs',
+        icon: FaHistory,
+        roles: ['Admin']
+    }
+];
+
+function MenuPrincipal() {
+    const navigate = useNavigate();
+    const { userData, loading, error } = useAuthUser(navigate);
+
+    const handleLogout = useCallback(async () => {
+        try {
+            await signOut(auth);
+            toast.success('Logout realizado com sucesso!');
+            navigate('/');
+        } catch (error) {
+            toast.error('Erro ao fazer logout!');
+        }
     }, [navigate]);
 
     if (loading) {
@@ -124,88 +161,24 @@ function MenuPrincipal() {
         );
     }
 
+    const filteredMenu = MENU_ITEMS.filter(item => item.roles.includes(userData.tipo));
+
     return (
-        <div className='menu-principal'>
+        <div className="menu-principal">
             <h1>Menu Principal</h1>
-
-            {(userData.tipo === 'Admin' || userData.tipo === 'Recepcao') && (
-                <div className='menu'>
-                    <Link to="/cadastro-visitante">
-                        <button>
-                            <FaUserPlus />
-                            Cadastrar Visitante
-                        </button>
-                    </Link>
-                </div>
-            )}
-
-            {(userData.tipo === 'Admin' || userData.tipo === 'Recepcao') && (
-                <div className='menu'>
-                    <Link to="/listar-visitantes">
-                        <button>
-                            <FaUsers />
-                            Visualizar Visitantes
-                        </button>
-                    </Link>
-                </div>
-            )}
-
-            {(userData.tipo === 'Admin' || userData.tipo === 'Pastor') && (
-                <div className='menu'>
-                    <Link to="/apresentar-visitante">
-                        <button>
-                            <FaUserFriends />
-                            Apresentar Visitantes
-                        </button>
-                    </Link>
-                </div>
-            )}
-
-            {(userData.tipo === 'Admin' || userData.tipo === 'Recepcao') && (
-                <div className='menu'>
-                    <Link to="/cadastrar-aviso">
-                        <button>
-                            <FaBell />
-                            Cadastrar Avisos
-                        </button>
-                    </Link>
-                </div>
-            )}
-
-            {(userData.tipo === 'Admin' || userData.tipo === 'Recepcao' || userData.tipo === 'Pastor') && (
-                <div className='menu'>
-                    <Link to="/listar-avisos">
-                        <button>
-                            <FaListAlt />
-                            Visualizar Avisos
-                        </button>
-                    </Link>
-                </div>
-            )}
-
-            {userData.tipo === 'Admin' && (
-                <div className='menu'>
-                    <Link to="/cadastrar-usuario">
-                        <button>
-                            <FaUserCog />
-                            Gerenciar Usuários
-                        </button>
-                    </Link>
-                </div>
-            )}
-
-            {userData.tipo === 'Admin' && (
-                <div className='menu'>
-                    <Link to="/listar-logs">
-                        <button>
-                            <FaHistory />
-                            Logs de Usuários
-                        </button>
-                    </Link>
-                </div>
-            )}
-
-            <button className='logaout' onClick={handleLogout}>
+            <div className="menu-list">
+                {filteredMenu.map(({ label, to, icon: Icon }, idx) => (
+                    <div className="menu" key={label}>
+                        <Link to={to}>
+                            <button>
+                                <Icon />
+                                {label}
+                            </button>
+                        </Link>
+                    </div>
+                ))}
+            </div>
+            <button className="logaout" onClick={handleLogout}>
                 <FaSignOutAlt />
                 Sair
             </button>

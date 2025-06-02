@@ -1,27 +1,39 @@
+body {
+  background: var(--neutro-claro-100);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .tela-inicial {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   padding: 3rem;
-  margin: 2rem auto;
+  margin: 2rem auto 2rem auto;
   width: 95%;
   max-width: 1000px;
   min-height: 600px;
-  border-radius: 24px;
-  background-color: var(--neutro-claro-100);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  background: var(--neutro-claro-100);
+  box-shadow: 0 8px 32px rgba(60, 40, 20, 0.12), 0 1.5px 6px rgba(0, 0, 0, 0.08);
+  border-radius: 32px;
+  backdrop-filter: blur(2px);
   transition: all 0.3s ease;
 }
 
 .logo-container {
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  filter: drop-shadow(0 2px 8px rgba(60, 40, 20, 0.10));
 }
 
 .logo-icon {
   font-size: 3.5rem;
   color: var(--marrom-escuro-10);
   animation: float 4s ease-in-out infinite;
+  text-shadow: 0 2px 8px rgba(60, 40, 20, 0.10);
 }
 
 .tela-inicial h1 {
@@ -31,6 +43,11 @@
   color: var(--marrom-escuro-10);
   line-height: 1.2;
   letter-spacing: -1px;
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: unset;
+  background-clip: unset;
+  text-fill-color: unset;
 }
 
 .welcome-text {
@@ -41,12 +58,22 @@
   color: var(--marrom-escuro-10);
   max-width: 85%;
   opacity: 0.9;
+  background: var(--neutro-claro-10);
+  border-radius: 10px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 1px 4px rgba(60, 40, 20, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .features-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  gap: 2.5rem;
   width: 100%;
   margin-bottom: 3rem;
 }
@@ -54,16 +81,27 @@
 .feature-item {
   background-color: var(--neutro-claro-10);
   padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
+  border-radius: 20px;
+  box-shadow: 0 4px 16px rgba(60, 40, 20, 0.08);
   border: 1px solid var(--marrom-escuro-10);
+  position: relative;
+  overflow: hidden;
+  background: var(--neutro-claro-10);
+}
+
+.feature-item::before {
+  display: none;
+}
+
+.feature-item > * {
+  position: relative;
+  z-index: 1;
 }
 
 .feature-item:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-  background-color: var(--neutro-claro-20);
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(60, 40, 20, 0.15);
+  background: var(--neutro-claro-20);
 }
 
 .feature-icon {
@@ -71,6 +109,7 @@
   color: var(--marrom-escuro-10);
   margin-bottom: 1.25rem;
   opacity: 0.9;
+  filter: drop-shadow(0 2px 6px rgba(167, 112, 239, 0.10));
 }
 
 .feature-item h3 {
@@ -88,31 +127,31 @@
 }
 
 .enter-button {
-  background-color: var(--marrom-escuro-10);
+  background: var(--marrom-escuro-10);
   color: var(--neutro-claro-100);
   width: 100%;
   max-width: 300px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.125rem;
   height: 54px;
   border: none;
-  border-radius: 14px;
+  border-radius: 18px;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(60, 40, 20, 0.15);
   margin-bottom: 2rem;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   cursor: pointer;
 }
 
 .enter-button:hover {
-  background-color: var(--marrom-escuro-30);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background: var(--marrom-escuro-30);
+  color: var(--neutro-claro-100);
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(60, 40, 20, 0.18);
 }
 
 .enter-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: scale(0.98);
 }
 
 .tela-inicial-footer {
@@ -122,6 +161,11 @@
   opacity: 0.8;
   font-size: 0.875rem;
   font-weight: 400;
+  background: var(--neutro-claro-10);
+  border-radius: 8px;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  box-shadow: 0 1px 4px rgba(60, 40, 20, 0.06);
 }
 
 @keyframes float {
@@ -167,6 +211,7 @@
   .tela-inicial {
     padding: 1.5rem;
     margin-top: 1rem;
+    border-radius: 18px;
   }
 
   .tela-inicial h1 {
@@ -175,9 +220,43 @@
 
   .welcome-text {
     font-size: 1rem;
+    padding: 0.5rem 0.75rem;
   }
 
   .feature-item {
-    padding: 1.5rem;
+    padding: 1.25rem;
+    border-radius: 14px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .tela-inicial {
+    margin: 1.5rem auto 1.5rem auto;
+    min-height: unset;
+    width: 98%;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+
+  .features-container {
+    gap: 1.25rem;
+  }
+
+  .feature-item {
+    padding: 1.25rem;
+    border-radius: 14px;
+  }
+
+  .welcome-text {
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
   }
 }

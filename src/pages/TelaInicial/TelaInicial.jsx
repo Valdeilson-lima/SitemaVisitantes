@@ -3,57 +3,69 @@ import './TelaInicial.css'
 import { useNavigate } from 'react-router-dom'
 import { FaChurch, FaUsers, FaClipboardList, FaBell } from 'react-icons/fa'
 
+const features = [
+    {
+        icon: <FaUsers />,
+        title: "Cadastro de Visitantes",
+        description: "Registre novos visitantes de forma rápida e organizada"
+    },
+    {
+        icon: <FaClipboardList />,
+        title: "Gestão de Visitantes",
+        description: "Visualize e gerencie todos os visitantes cadastrados"
+    },
+    {
+        icon: <FaBell />,
+        title: "Sistema de Avisos",
+        description: "Comunique-se com a equipe através de avisos importantes"
+    }
+]
+
+function FeatureItem({ icon, title, description }) {
+    return (
+        <div className="feature-item">
+            <div className="feature-icon">{icon}</div>
+            <h3>{title}</h3>
+            <p>{description}</p>
+        </div>
+    )
+}
+
 function TelaInicial() {
-    const navigation = useNavigate()
-    
-    function handleClick() {
-        navigation('/login')
+    const navigate = useNavigate()
+
+    const handleAccessSystem = () => {
+        navigate('/login')
     }
 
-    const features = [
-        {
-            icon: <FaUsers />,
-            title: "Cadastro de Visitantes",
-            description: "Registre novos visitantes de forma rápida e organizada"
-        },
-        {
-            icon: <FaClipboardList />,
-            title: "Gestão de Visitantes",
-            description: "Visualize e gerencie todos os visitantes cadastrados"
-        },
-        {
-            icon: <FaBell />,
-            title: "Sistema de Avisos",
-            description: "Comunique-se com a equipe através de avisos importantes"
-        }
-    ]
-
     return (
-        <div className='tela-inicial'>
-            <div className="logo-container">
+        <div className="tela-inicial">
+            <header className="logo-container">
                 <FaChurch className="logo-icon" />
-            </div>
-            
-            <h1>Bem-Vindo ao Sistema de Visitantes</h1>
-            
-            <p className="welcome-text">
-                Este é o sistema de gestão de visitantes da nossa igreja. 
-                Uma ferramenta completa para gerenciar a recepção e acompanhamento de visitantes.
-            </p>
+            </header>
 
-            <div className="features-container">
-                {features.map((feature, index) => (
-                    <div key={index} className="feature-item">
-                        <div className="feature-icon">{feature.icon}</div>
-                        <h3>{feature.title}</h3>
-                        <p>{feature.description}</p>
-                    </div>
-                ))}
-            </div>
+            <main>
+                <h1>Bem-vindo ao Sistema de Visitantes</h1>
+                <p className="welcome-text">
+                    Sistema de gestão de visitantes da nossa igreja.<br />
+                    Uma ferramenta completa para gerenciar a recepção e acompanhamento de visitantes.
+                </p>
 
-            <button onClick={handleClick} className="enter-button">
-                Acessar o Sistema
-            </button>
+                <section className="features-container">
+                    {features.map((feature, idx) => (
+                        <FeatureItem
+                            key={idx}
+                            icon={feature.icon}
+                            title={feature.title}
+                            description={feature.description}
+                        />
+                    ))}
+                </section>
+
+                <button onClick={handleAccessSystem} className="enter-button">
+                    Acessar o Sistema
+                </button>
+            </main>
 
             <footer className="tela-inicial-footer">
                 <p>Sistema desenvolvido para fortalecer a comunhão em nossa igreja</p>
